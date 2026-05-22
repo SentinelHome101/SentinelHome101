@@ -1,0 +1,25 @@
+SentinelHome101 v1.0.0 — Security Report
+Network: Home Network
+Generated: 2026-05-19 20:19
+Score: 64/100
+============================================================
+
+FINDINGS:
+
+[CRITICAL] BitLocker: off
+  BitLocker is not enabled. Physical theft would give full access to all your data.
+
+[WARNING] OS patches: could not check
+
+[WARNING] Audit logs: could not check
+
+[WARNING] Pagefile: not clearing
+  Pagefile is not cleared on shutdown. Sensitive data may persist on disk.
+
+[WARNING] Rogue DHCP server detected
+  DHCP server is 192.168.4.1 but expected 192.168.7.1. Verify this is your router.
+  Fix: Verify all DHCP servers on your network are legitimate. An unauthorized DHCP server could redirect your traffic.
+
+[INFO] Unencrypted web interface on Unknown
+  HTTP (port 80) is open on 192.168.7.64 but HTTPS (port 443) is not. This device's web interface is accessible without encryption.
+  Fix: Check the device's settings for an HTTPS option and enable it. Many routers offer HTTPS-only admin access.

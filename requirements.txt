@@ -1,0 +1,11 @@
+# SentinelHome101 — External Dependencies
+# Install all of these with: pip install -r requirements.txt
+#
+# Everything else used by this application is part of
+# Python's standard library and requires no installation.
+
+speedtest-cli>=2.1.3    # Internet speed test (opt-in feature)
+requests>=2.31.0        # HTTP requests for HaveIBeenPwned API (opt-in)
+matplotlib>=3.8.0       # Charts and graphs in the Monitoring tab
+Pillow>=10.0.0          # Image handling for icon and report generation
+pyinstaller>=6.0.0      # Packaging the app into a distributable .exe
