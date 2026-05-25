@@ -513,8 +513,12 @@ class ThreatTab:
                 import json
 
                 # Hash the email with SHA-1
+                # usedforsecurity=False is correct here — SHA-1 is required
+                # by the HaveIBeenPwned k-anonymity API format, not used
+                # for any security purpose within this application.
                 email_hash = hashlib.sha1(
-                    email.lower().encode()).hexdigest().upper()
+                    email.lower().encode(),
+                    usedforsecurity=False).hexdigest().upper()
 
                 # --- k-anonymity endpoint ---
                 # Only sends first 5 chars of hash — full email never transmitted

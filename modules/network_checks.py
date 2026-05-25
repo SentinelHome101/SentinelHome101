@@ -1005,7 +1005,7 @@ class NetworkChecker:
         try:
             import urllib.request
             with urllib.request.urlopen(
-                'https://api.ipify.org', timeout=5, creationflags=CREATE_NO_WINDOW
+                'https://api.ipify.org', timeout=5
             ) as resp:
                 public_ip = resp.read().decode('utf-8').strip()
                 return {
