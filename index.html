@@ -3,13 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Privacy Policy — SentinelHome101</title>
-<meta name="description" content="SentinelHome101 privacy policy. All scanning runs locally. No data is sent to the cloud.">
+<title>SentinelHome101 — Home Network Security Audit for Windows</title>
+<meta name="description" content="101-point home network and computer security audit for Windows. Find vulnerabilities, identify devices, and fix security issues — all in plain English.">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 
 <style>
+/* ─── RESET & BASE ─────────────────────────────────────────── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
@@ -21,8 +22,10 @@
   --ghost:      #f1f5f9;
   --ghost-dim:  #94a3b8;
   --ghost-mute: #334155;
-  --safe:       #4ade80;
+  --critical:   #f87171;
   --warning:    #fbbf24;
+  --safe:       #4ade80;
+  --accent:     #f1f5f9;
   --serif:      'DM Serif Display', Georgia, serif;
   --mono:       'DM Mono', 'Courier New', monospace;
   --sans:       'DM Sans', system-ui, sans-serif;
@@ -39,6 +42,7 @@ body {
   overflow-x: hidden;
 }
 
+/* ─── NOISE TEXTURE OVERLAY ───────────────────────────────── */
 body::before {
   content: '';
   position: fixed;
@@ -49,7 +53,7 @@ body::before {
   opacity: 0.4;
 }
 
-/* NAV */
+/* ─── NAV ──────────────────────────────────────────────────── */
 nav {
   position: fixed;
   top: 0; left: 0; right: 0;
@@ -71,33 +75,231 @@ nav {
   text-decoration: none;
 }
 
+.nav-shield {
+  width: 32px;
+  height: 36px;
+  flex-shrink: 0;
+}
+
 .nav-name {
   font-family: var(--serif);
   font-size: 18px;
   color: var(--ghost);
+  letter-spacing: -0.01em;
 }
 
-.nav-back {
-  font-size: 13px;
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  list-style: none;
+}
+
+.nav-links a {
   color: var(--ghost-dim);
   text-decoration: none;
+  font-size: 13px;
   font-weight: 400;
   letter-spacing: 0.04em;
+  text-transform: uppercase;
   transition: color 0.2s;
 }
 
-.nav-back:hover { color: var(--ghost); }
+.nav-links a:hover { color: var(--ghost); }
 
-/* CONTENT */
-.page-wrap {
-  max-width: 720px;
-  margin: 0 auto;
-  padding: 120px 48px 80px;
+.nav-cta {
+  background: var(--ghost) !important;
+  color: var(--bg) !important;
+  padding: 8px 20px !important;
+  border-radius: 4px !important;
+  font-weight: 500 !important;
+  transition: opacity 0.2s !important;
+}
+
+.nav-cta:hover { opacity: 0.88 !important; }
+
+/* ─── HERO ─────────────────────────────────────────────────── */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 120px 24px 80px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Background radial glow */
+.hero::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 800px;
+  height: 800px;
+  background: radial-gradient(circle, rgba(241,245,249,0.04) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.hero-eyebrow {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--ghost-dim);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  margin-bottom: 28px;
+  opacity: 0;
+  animation: fadeUp 0.8s 0.1s ease forwards;
+}
+
+.hero-icon {
+  width: 96px;
+  height: 108px;
+  margin: 0 auto 40px;
+  opacity: 0;
+  animation: fadeUp 0.8s 0.2s ease forwards;
+}
+
+.hero h1 {
+  font-family: var(--serif);
+  font-size: clamp(42px, 7vw, 84px);
+  font-weight: 400;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  color: var(--ghost);
+  max-width: 800px;
+  margin: 0 auto 24px;
+  opacity: 0;
+  animation: fadeUp 0.8s 0.3s ease forwards;
+}
+
+.hero h1 em {
+  font-style: italic;
+  color: var(--ghost-dim);
+}
+
+.hero-sub {
+  font-size: 18px;
+  color: var(--ghost-dim);
+  max-width: 560px;
+  margin: 0 auto 48px;
+  font-weight: 300;
+  opacity: 0;
+  animation: fadeUp 0.8s 0.4s ease forwards;
+}
+
+.hero-actions {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  opacity: 0;
+  animation: fadeUp 0.8s 0.5s ease forwards;
+}
+
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--ghost);
+  color: var(--bg);
+  text-decoration: none;
+  padding: 14px 32px;
+  border-radius: 4px;
+  font-size: 15px;
+  font-weight: 500;
+  font-family: var(--sans);
+  transition: opacity 0.2s, transform 0.2s;
+}
+
+.btn-primary:hover { opacity: 0.88; transform: translateY(-1px); }
+
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--ghost-dim);
+  text-decoration: none;
+  padding: 14px 24px;
+  border-radius: 4px;
+  font-size: 15px;
+  border: 1px solid var(--border-2);
+  transition: border-color 0.2s, color 0.2s;
+}
+
+.btn-secondary:hover { border-color: var(--ghost-mute); color: var(--ghost); }
+
+.hero-meta {
+  margin-top: 24px;
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--ghost-mute);
+  letter-spacing: 0.06em;
+  opacity: 0;
+  animation: fadeUp 0.8s 0.6s ease forwards;
+}
+
+/* ─── SCORE STRIP ──────────────────────────────────────────── */
+.score-strip {
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  background: var(--bg-2);
+  padding: 32px 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 64px;
+  flex-wrap: wrap;
+}
+
+.score-item {
+  text-align: center;
+}
+
+.score-num {
+  font-family: var(--mono);
+  font-size: 36px;
+  font-weight: 500;
+  color: var(--ghost);
+  line-height: 1;
+  margin-bottom: 6px;
+}
+
+.score-num.critical { color: var(--critical); }
+.score-num.warning  { color: var(--warning); }
+.score-num.safe     { color: var(--safe); }
+
+.score-label {
+  font-size: 11px;
+  color: var(--ghost-mute);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-weight: 400;
+}
+
+.score-divider {
+  width: 1px;
+  height: 48px;
+  background: var(--border-2);
+}
+
+/* ─── SECTIONS ─────────────────────────────────────────────── */
+section {
   position: relative;
   z-index: 1;
 }
 
-.page-eyebrow {
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 48px;
+}
+
+.section-label {
   font-family: var(--mono);
   font-size: 10px;
   color: var(--ghost-mute);
@@ -106,130 +308,376 @@ nav {
   margin-bottom: 16px;
 }
 
-.page-title {
+.section-title {
   font-family: var(--serif);
-  font-size: 48px;
+  font-size: clamp(32px, 4vw, 52px);
   font-weight: 400;
   line-height: 1.1;
   letter-spacing: -0.02em;
   color: var(--ghost);
-  margin-bottom: 12px;
+  margin-bottom: 16px;
 }
 
-.page-meta {
+.section-body {
+  font-size: 16px;
+  color: var(--ghost-dim);
+  max-width: 540px;
+  line-height: 1.7;
+}
+
+/* ─── WHAT IT DOES ─────────────────────────────────────────── */
+.what-section {
+  padding: 120px 0;
+}
+
+.what-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: center;
+  margin-top: 64px;
+}
+
+.tiers {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.tier {
+  display: flex;
+  gap: 20px;
+  padding: 20px 0;
+  border-bottom: 1px solid var(--border);
+  opacity: 0;
+  transform: translateX(-16px);
+  transition: opacity 0.5s, transform 0.5s;
+}
+
+.tier.visible { opacity: 1; transform: translateX(0); }
+
+.tier:first-child { border-top: 1px solid var(--border); }
+
+.tier-num {
   font-family: var(--mono);
   font-size: 11px;
   color: var(--ghost-mute);
-  margin-bottom: 48px;
-  padding-bottom: 48px;
-  border-bottom: 1px solid var(--border);
+  padding-top: 3px;
+  flex-shrink: 0;
+  width: 28px;
 }
 
-/* Summary box */
-.summary-box {
-  background: var(--bg-2);
-  border: 1px solid var(--border-2);
-  border-left: 3px solid var(--safe);
-  border-radius: 2px;
-  padding: 20px 24px;
-  margin-bottom: 48px;
-  font-size: 15px;
+.tier-content {}
+
+.tier-title {
+  font-size: 14px;
+  font-weight: 500;
   color: var(--ghost);
+  margin-bottom: 4px;
+}
+
+.tier-desc {
+  font-size: 13px;
+  color: var(--ghost-dim);
+  line-height: 1.5;
+}
+
+.tier-count {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--ghost-mute);
+  margin-top: 4px;
+}
+
+.what-right {}
+
+.big-score {
+  text-align: center;
+  padding: 48px;
+  border: 1px solid var(--border);
+  background: var(--bg-2);
+  border-radius: 2px;
+}
+
+.big-score-gauge {
+  width: 160px;
+  height: 160px;
+  margin: 0 auto 24px;
+}
+
+.big-score-num {
+  font-family: var(--mono);
+  font-size: 64px;
+  font-weight: 500;
+  color: var(--warning);
+  line-height: 1;
+  margin-bottom: 4px;
+}
+
+.big-score-label {
+  font-size: 12px;
+  color: var(--ghost-mute);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 32px;
+}
+
+.findings-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  text-align: left;
+}
+
+.finding {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  padding: 10px 12px;
+  border-radius: 2px;
+}
+
+.finding.crit { background: rgba(248,113,113,0.08); border-left: 2px solid var(--critical); }
+.finding.warn { background: rgba(251,191,36,0.08); border-left: 2px solid var(--warning); }
+.finding.pass { background: rgba(74,222,128,0.08); border-left: 2px solid var(--safe); }
+
+.finding-badge {
+  font-family: var(--mono);
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  padding: 2px 6px;
+  border-radius: 2px;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.finding.crit .finding-badge { background: rgba(248,113,113,0.15); color: var(--critical); }
+.finding.warn .finding-badge { background: rgba(251,191,36,0.15); color: var(--warning); }
+.finding.pass .finding-badge { background: rgba(74,222,128,0.15); color: var(--safe); }
+
+.finding-text {
+  font-size: 12px;
+  color: var(--ghost-dim);
+  line-height: 1.4;
+}
+
+/* ─── FEATURES GRID ────────────────────────────────────────── */
+.features-section {
+  padding: 120px 0;
+  border-top: 1px solid var(--border);
+  background: var(--bg-2);
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+  margin-top: 64px;
+}
+
+.feature-card {
+  background: var(--bg-2);
+  padding: 32px;
+  transition: background 0.2s;
+}
+
+.feature-card:hover { background: var(--bg-3); }
+
+.feature-icon {
+  font-size: 20px;
+  margin-bottom: 16px;
+  display: block;
+}
+
+.feature-title {
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--ghost);
+  margin-bottom: 8px;
+}
+
+.feature-desc {
+  font-size: 13px;
+  color: var(--ghost-dim);
   line-height: 1.6;
 }
 
-/* Sections */
-.policy-section {
-  margin-bottom: 48px;
+/* ─── PRIVACY SECTION ──────────────────────────────────────── */
+.privacy-section {
+  padding: 120px 0;
+  border-top: 1px solid var(--border);
 }
 
-.policy-section h2 {
-  font-family: var(--serif);
-  font-size: 24px;
-  font-weight: 400;
-  color: var(--ghost);
-  margin-bottom: 16px;
-  padding-bottom: 12px;
-  border-bottom: 1px solid var(--border);
+.privacy-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: center;
+  margin-top: 64px;
 }
 
-.policy-section p {
+.privacy-points {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.privacy-point {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+}
+
+.privacy-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--safe);
+  flex-shrink: 0;
+  margin-top: 7px;
+}
+
+.privacy-dot.amber { background: var(--warning); }
+
+.privacy-point-title {
   font-size: 14px;
-  color: var(--ghost-dim);
-  line-height: 1.8;
-  margin-bottom: 12px;
-}
-
-.policy-section ul {
-  list-style: none;
-  margin: 12px 0;
-}
-
-.policy-section ul li {
-  font-size: 14px;
-  color: var(--ghost-dim);
-  line-height: 1.7;
-  padding: 6px 0 6px 20px;
-  position: relative;
-  border-bottom: 1px solid var(--border);
-}
-
-.policy-section ul li:last-child { border-bottom: none; }
-
-.policy-section ul li::before {
-  content: '●';
-  position: absolute;
-  left: 0;
-  color: var(--ghost-mute);
-  font-size: 8px;
-  top: 10px;
-}
-
-/* Data table */
-.data-table {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: 13px;
-  margin: 16px 0;
-}
-
-.data-table th {
-  text-align: left;
-  padding: 10px 14px;
-  background: var(--bg-3);
-  color: var(--ghost-mute);
   font-weight: 500;
+  color: var(--ghost);
+  margin-bottom: 4px;
+}
+
+.privacy-point-desc {
+  font-size: 13px;
+  color: var(--ghost-dim);
+  line-height: 1.6;
+}
+
+.data-box {
+  border: 1px solid var(--border);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.data-box-header {
+  background: var(--bg-3);
+  padding: 12px 20px;
   font-family: var(--mono);
-  font-size: 10px;
+  font-size: 11px;
+  color: var(--ghost-mute);
   letter-spacing: 0.1em;
   text-transform: uppercase;
   border-bottom: 1px solid var(--border);
 }
 
-.data-table td {
-  padding: 10px 14px;
+.data-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 20px;
   border-bottom: 1px solid var(--border);
-  color: var(--ghost-dim);
-  vertical-align: top;
+  font-size: 13px;
 }
 
-.data-table td:last-child { font-family: var(--mono); font-size: 11px; }
+.data-row:last-child { border-bottom: none; }
 
-.local  { color: var(--safe); }
-.opt    { color: var(--warning); }
-.never  { color: var(--ghost-mute); }
+.data-key { color: var(--ghost-dim); font-family: var(--mono); font-size: 12px; }
+.data-val-local { color: var(--safe); font-size: 11px; font-family: var(--mono); }
+.data-val-opt { color: var(--warning); font-size: 11px; font-family: var(--mono); }
+.data-val-never { color: var(--ghost-mute); font-size: 11px; font-family: var(--mono); }
 
-/* Footer */
+/* ─── DOWNLOAD SECTION ─────────────────────────────────────── */
+.download-section {
+  padding: 120px 0;
+  border-top: 1px solid var(--border);
+  background: var(--bg-2);
+  text-align: center;
+}
+
+.download-box {
+  max-width: 560px;
+  margin: 64px auto 0;
+  border: 1px solid var(--border-2);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.download-box-header {
+  background: var(--bg-3);
+  padding: 20px 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--border);
+}
+
+.download-filename {
+  font-family: var(--mono);
+  font-size: 14px;
+  color: var(--ghost);
+}
+
+.download-size {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--ghost-mute);
+}
+
+.download-box-body {
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.download-requirements {
+  display: flex;
+  gap: 24px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 8px;
+}
+
+.req {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: var(--ghost-dim);
+}
+
+.req-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--safe);
+  flex-shrink: 0;
+}
+
+.download-warning {
+  font-size: 11px;
+  color: var(--ghost-mute);
+  line-height: 1.6;
+  padding: 12px 16px;
+  background: rgba(251,191,36,0.06);
+  border: 1px solid rgba(251,191,36,0.12);
+  border-radius: 2px;
+  text-align: left;
+}
+
+.download-warning strong { color: var(--warning); }
+
+/* ─── FOOTER ───────────────────────────────────────────────── */
 footer {
   border-top: 1px solid var(--border);
-  padding: 32px 48px;
+  padding: 40px 48px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   flex-wrap: wrap;
   gap: 16px;
-  position: relative;
-  z-index: 1;
 }
 
 .footer-left {
@@ -239,25 +687,101 @@ footer {
   line-height: 1.8;
 }
 
-.footer-right { font-size: 12px; color: var(--ghost-mute); }
-.footer-right a { color: var(--ghost-dim); text-decoration: none; transition: color 0.2s; }
+.footer-right {
+  font-size: 12px;
+  color: var(--ghost-mute);
+}
+
+.footer-right a {
+  color: var(--ghost-dim);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
 .footer-right a:hover { color: var(--ghost); }
 
+/* ─── ANIMATIONS ───────────────────────────────────────────── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ─── FAQ ──────────────────────────────────────────────────── */
+.faq-item {
+  border-bottom: 1px solid var(--border);
+}
+
+.faq-q {
+  width: 100%;
+  background: none;
+  border: none;
+  color: var(--ghost);
+  font-family: var(--sans);
+  font-size: 15px;
+  font-weight: 400;
+  text-align: left;
+  padding: 20px 0;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  transition: color 0.2s;
+}
+
+.faq-q:hover { color: var(--ghost-dim); }
+
+.faq-icon {
+  font-size: 20px;
+  color: var(--ghost-mute);
+  flex-shrink: 0;
+  transition: transform 0.2s;
+  font-weight: 300;
+}
+
+.faq-q.open .faq-icon { transform: rotate(45deg); }
+
+.faq-a {
+  font-size: 14px;
+  color: var(--ghost-dim);
+  line-height: 1.7;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease, padding 0.3s ease;
+  padding: 0;
+}
+
+.faq-a.open {
+  max-height: 200px;
+  padding-bottom: 20px;
+}
+
+/* ─── RESPONSIVE ───────────────────────────────────────────── */
 @media (max-width: 768px) {
   nav { padding: 0 20px; }
-  .page-wrap { padding: 100px 20px 60px; }
-  .page-title { font-size: 36px; }
-  footer { padding: 24px 20px; flex-direction: column; }
+  nav .nav-links { display: none; }
+  .container { padding: 0 20px; }
+  .what-grid { grid-template-columns: 1fr; gap: 48px; }
+  .features-grid { grid-template-columns: 1fr; }
+  .privacy-grid { grid-template-columns: 1fr; gap: 48px; }
+  .score-strip { gap: 32px; padding: 24px 20px; }
+  .score-divider { display: none; }
+  footer { padding: 32px 20px; flex-direction: column; }
 }
 </style>
 </head>
 <body>
 
+<!-- ─── NAV ──────────────────────────────────────────────── -->
 <nav>
-  <a href="index.html" class="nav-logo">
-    <svg width="28" height="32" viewBox="0 0 100 110" fill="none">
+  <a href="#" class="nav-logo">
+    <svg class="nav-shield" viewBox="0 0 100 110" fill="none">
       <path d="M50 2 L98 20 L98 68 C98 88 50 108 50 108 C50 108 2 88 2 68 L2 20 Z"
             fill="#0d1117" stroke="#1c2128" stroke-width="2"/>
+      <path d="M50 18 L84 36 L84 76 L16 76 L16 36 Z"
+            fill="none" stroke="#f1f5f9" stroke-width="1.5" stroke-linejoin="round" opacity="0.3"/>
+      <path d="M50 18 L84 36" stroke="#f1f5f9" stroke-width="1.5" stroke-linecap="round" opacity="0.5"/>
+      <path d="M50 18 L16 36" stroke="#f1f5f9" stroke-width="1.5" stroke-linecap="round" opacity="0.5"/>
       <path d="M44 70 L44 34 L50 22 L56 34 L56 70 Z" fill="#f1f5f9"/>
       <path d="M28 72 C28 66 38 68 50 68 C62 68 72 66 72 72 C72 78 62 76 50 76 C38 76 28 78 28 72Z" fill="#f1f5f9"/>
       <rect x="46" y="76" width="8" height="7" rx="2" fill="#f1f5f9"/>
@@ -265,132 +789,492 @@ footer {
     </svg>
     <span class="nav-name">SentinelHome101</span>
   </a>
-  <a href="index.html" class="nav-back">← Back to home</a>
+  <ul class="nav-links">
+    <li><a href="#what">What It Does</a></li>
+    <li><a href="#features">Features</a></li>
+    <li><a href="#privacy">Privacy</a></li>
+    <li><a href="#faq">FAQ</a></li>
+    <li><a href="#download" class="nav-cta">Download</a></li>
+  </ul>
 </nav>
 
-<div class="page-wrap">
+<!-- ─── HERO ─────────────────────────────────────────────── -->
+<section class="hero">
+  <p class="hero-eyebrow">Version 1.0.0 — Free for Windows</p>
 
-  <p class="page-eyebrow">Legal</p>
-  <h1 class="page-title">Privacy Policy</h1>
-  <p class="page-meta">Version 1.0.0 &nbsp;·&nbsp; Effective May 23, 2026 &nbsp;·&nbsp; sentinelhome101.com</p>
+  <svg class="hero-icon" viewBox="0 0 100 110" fill="none">
+    <path d="M50 2 L98 20 L98 68 C98 88 50 108 50 108 C50 108 2 88 2 68 L2 20 Z"
+          fill="#0f1318" stroke="#252d3a" stroke-width="2"/>
+    <path d="M50 7 L93 24 L93 68 C93 86 50 104 50 104 C50 104 7 86 7 68 L7 24 Z"
+          fill="none" stroke="#f1f5f9" stroke-width="0.6" opacity="0.08"/>
+    <path d="M50 18 L84 36 L84 76 L16 76 L16 36 Z"
+          fill="none" stroke="#f1f5f9" stroke-width="1.8" stroke-linejoin="round" opacity="0.3"/>
+    <path d="M50 18 L84 36" stroke="#f1f5f9" stroke-width="1.8" stroke-linecap="round" opacity="0.55"/>
+    <path d="M50 18 L16 36" stroke="#f1f5f9" stroke-width="1.8" stroke-linecap="round" opacity="0.55"/>
+    <path d="M44 70 L44 34 L50 22 L56 34 L56 70 Z" fill="#f1f5f9"/>
+    <path d="M28 72 C28 66 38 68 50 68 C62 68 72 66 72 72 C72 78 62 76 50 76 C38 76 28 78 28 72Z" fill="#f1f5f9"/>
+    <rect x="46" y="76" width="8" height="7" rx="2" fill="#f1f5f9"/>
+    <ellipse cx="50" cy="85" rx="6" ry="4" fill="#f1f5f9"/>
+  </svg>
 
-  <div class="summary-box">
-    <strong>The short version:</strong> SentinelHome101 does not collect, transmit, sell, or share your personal data. All scanning runs entirely on your local machine and network. Nothing leaves your computer except via two explicitly opt-in features that are disabled by default.
+  <h1>Your home network has<br><em>more vulnerabilities</em><br>than you think.</h1>
+
+  <p class="hero-sub">SentinelHome101 runs 101 security checks on your home network and computer — and explains every finding in plain English.</p>
+
+  <div class="hero-actions">
+    <a href="#download" class="btn-primary">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+        <path d="M8 1v9M4 7l4 4 4-4M2 13h12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      Download Free — Windows
+    </a>
+    <a href="#what" class="btn-secondary">See what it checks →</a>
   </div>
 
-  <div class="policy-section">
-    <h2>What data we collect</h2>
-    <p>SentinelHome101 stores the following data locally on your machine in <code style="font-family:var(--mono);font-size:12px;color:var(--ghost);">C:\Users\[YourName]\AppData\Roaming\SentinelHome101\</code>:</p>
-    <ul>
-      <li>Scan history — dates, scores, finding counts, and device counts from previous scans</li>
-      <li>Device database — IP addresses, MAC addresses, manufacturer names, and hostnames of devices discovered on your network</li>
-      <li>Security findings — descriptions of issues found on your network and machine</li>
-      <li>Application settings — your preferences such as scan profile, network name, and theme</li>
-      <li>Ransomware canary file records — file paths and SHA-256 hashes of planted canary files</li>
-    </ul>
-    <p>This data never leaves your machine. It is stored in a local SQLite database file that only SentinelHome101 reads and writes.</p>
+  <p class="hero-meta">No Python required &nbsp;·&nbsp; No cloud &nbsp;·&nbsp; No subscription &nbsp;·&nbsp; Windows 10 / 11</p>
+</section>
+
+<!-- ─── SCORE STRIP ──────────────────────────────────────── -->
+<div class="score-strip">
+  <div class="score-item">
+    <div class="score-num">101</div>
+    <div class="score-label">Security Checks</div>
   </div>
-
-  <div class="policy-section">
-    <h2>What we do not collect</h2>
-    <ul>
-      <li>No usage analytics or telemetry</li>
-      <li>No crash reports</li>
-      <li>No device identifiers</li>
-      <li>No scan results transmitted to any server</li>
-      <li>No tracking of how you use the application</li>
-    </ul>
+  <div class="score-divider"></div>
+  <div class="score-item">
+    <div class="score-num critical">0</div>
+    <div class="score-label">Data Sent to Cloud</div>
   </div>
-
-  <div class="policy-section">
-    <h2>External service connections</h2>
-    <p>Two features optionally connect to external services. Both are disabled by default and require you to explicitly enable them in Settings.</p>
-
-    <table class="data-table">
-      <tr>
-        <th>Feature</th>
-        <th>Service</th>
-        <th>Data transmitted</th>
-        <th>Default</th>
-      </tr>
-      <tr>
-        <td>Internet Speed Test</td>
-        <td>Speedtest.net</td>
-        <td>Network packets for speed measurement. Your IP address is implicit in the connection.</td>
-        <td class="opt">Disabled</td>
-      </tr>
-      <tr>
-        <td>Credential Breach Check</td>
-        <td>HaveIBeenPwned.com</td>
-        <td>First 5 characters of a SHA-1 hash of your email address only. Your full email is never transmitted.</td>
-        <td class="opt">Disabled</td>
-      </tr>
-      <tr>
-        <td>All other features</td>
-        <td>None</td>
-        <td>Local network only — no internet connection made</td>
-        <td class="local">Local only</td>
-      </tr>
-    </table>
+  <div class="score-divider"></div>
+  <div class="score-item">
+    <div class="score-num safe">~30s</div>
+    <div class="score-label">Quick Scan Time</div>
   </div>
-
-  <div class="policy-section">
-    <h2>Data destination summary</h2>
-    <table class="data-table">
-      <tr><th>Data type</th><th>Where it goes</th></tr>
-      <tr><td>Scan results</td><td class="local">LOCAL ONLY</td></tr>
-      <tr><td>Device inventory</td><td class="local">LOCAL ONLY</td></tr>
-      <tr><td>Security findings</td><td class="local">LOCAL ONLY</td></tr>
-      <tr><td>Settings and preferences</td><td class="local">LOCAL ONLY</td></tr>
-      <tr><td>Speed test (opt-in)</td><td class="opt">SPEEDTEST.NET</td></tr>
-      <tr><td>Breach check email hash (opt-in)</td><td class="opt">HIBP — HASH PREFIX ONLY</td></tr>
-      <tr><td>Usage analytics</td><td class="never">NEVER</td></tr>
-      <tr><td>Personal data of any kind</td><td class="never">NEVER</td></tr>
-    </table>
+  <div class="score-divider"></div>
+  <div class="score-item">
+    <div class="score-num">6</div>
+    <div class="score-label">Security Categories</div>
   </div>
-
-  <div class="policy-section">
-    <h2>Data retention</h2>
-    <p>All locally stored data remains on your machine until you delete it. There is no automatic data expiry. To remove all data completely, delete the folder at <code style="font-family:var(--mono);font-size:12px;color:var(--ghost);">C:\Users\[YourName]\AppData\Roaming\SentinelHome101\</code>.</p>
+  <div class="score-divider"></div>
+  <div class="score-item">
+    <div class="score-num safe">Free</div>
+    <div class="score-label">Always</div>
   </div>
-
-  <div class="policy-section">
-    <h2>Children's privacy</h2>
-    <p>SentinelHome101 is designed for home network administration and is not directed at children under 13. We do not knowingly collect any information from children.</p>
-  </div>
-
-  <div class="policy-section">
-    <h2>Changes to this policy</h2>
-    <p>If this policy changes in a future version, the updated policy will be published here and the effective date will be updated. Continued use of the software after a policy change constitutes acceptance of the updated policy.</p>
-  </div>
-
-  <div class="policy-section">
-    <h2>Disclaimer of warranties</h2>
-    <p>SentinelHome101 is provided "as is" and "as available" without warranty of any kind, express or implied, including but not limited to warranties of merchantability, fitness for a particular purpose, or non-infringement.</p>
-    <p>The developer does not warrant that the software will detect all security vulnerabilities, that results will be accurate or complete, or that use of the software will prevent any security incident.</p>
-    <p>SentinelHome101 is a diagnostic and reporting tool only — it does not make changes to your system, network, or devices. All remediation actions are taken solely by the user at their own discretion. Use at your own risk.</p>
-  </div>
-
-  <div class="policy-section">
-    <h2>Contact</h2>
-    <p>Questions about this Privacy Policy: <a href="mailto:support@sentinelhome101.com" style="color:var(--ghost-dim);">support@sentinelhome101.com</a></p>
-  </div>
-
 </div>
 
+<!-- ─── WHAT IT DOES ─────────────────────────────────────── -->
+<section class="what-section" id="what">
+  <div class="container">
+    <p class="section-label">What it does</p>
+    <h2 class="section-title">A full security audit.<br>In plain English.</h2>
+    <p class="section-body">Commercial security tools cost $2,000–$6,000 per year and require an IT department to operate. SentinelHome101 gives home users the same depth of audit — and explains every finding in language anyone can understand.</p>
+
+    <div class="what-grid">
+      <div class="tiers">
+        <div class="tier">
+          <div class="tier-num">01</div>
+          <div class="tier-content">
+            <div class="tier-title">Endpoint Security</div>
+            <div class="tier-desc">Antivirus, BitLocker, Secure Boot, Windows Defender, OS patches, user accounts, and more.</div>
+            <div class="tier-count">15 checks</div>
+          </div>
+        </div>
+        <div class="tier">
+          <div class="tier-num">02</div>
+          <div class="tier-content">
+            <div class="tier-title">Network Perimeter</div>
+            <div class="tier-desc">WiFi security, router credentials, DNS hijacking, firewall, TLS version, and UPnP exposure.</div>
+            <div class="tier-count">15 checks</div>
+          </div>
+        </div>
+        <div class="tier">
+          <div class="tier-num">03</div>
+          <div class="tier-content">
+            <div class="tier-title">Threat Detection</div>
+            <div class="tier-desc">Botnet behavior, ARP spoofing, rogue DHCP, ransomware canary files, and credential breaches.</div>
+            <div class="tier-count">11 checks</div>
+          </div>
+        </div>
+        <div class="tier">
+          <div class="tier-num">04</div>
+          <div class="tier-content">
+            <div class="tier-title">Device & Exposure</div>
+            <div class="tier-desc">Every device on your network identified by manufacturer, with open ports and risk scores.</div>
+            <div class="tier-count">18 checks</div>
+          </div>
+        </div>
+        <div class="tier">
+          <div class="tier-num">05</div>
+          <div class="tier-content">
+            <div class="tier-title">Monitoring & History</div>
+            <div class="tier-desc">Scan history, change detection, inactive device tracking, and performance baselines.</div>
+            <div class="tier-count">24 checks</div>
+          </div>
+        </div>
+        <div class="tier">
+          <div class="tier-num">06</div>
+          <div class="tier-content">
+            <div class="tier-title">Reporting</div>
+            <div class="tier-desc">HTML, TXT, and CSV export. Plain-English remediation for every finding.</div>
+            <div class="tier-count">18 checks</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="what-right">
+        <div class="big-score">
+          <svg class="big-score-gauge" viewBox="0 0 160 160">
+            <!-- Track -->
+            <path d="M 80 140 A 60 60 0 1 1 80.01 140" fill="none" stroke="#1e2530" stroke-width="10" stroke-dasharray="283 283" stroke-linecap="round" transform="rotate(135 80 80)"/>
+            <!-- Score arc — amber for mid score -->
+            <path d="M 80 140 A 60 60 0 1 1 80.01 140" fill="none" stroke="#fbbf24" stroke-width="10"
+                  stroke-dasharray="170 283" stroke-linecap="round" transform="rotate(135 80 80)"
+                  style="transition: stroke-dasharray 1.5s ease"/>
+            <text x="80" y="76" text-anchor="middle" font-family="'DM Mono', monospace" font-size="36" fill="#fbbf24" font-weight="500">67</text>
+            <text x="80" y="96" text-anchor="middle" font-family="'DM Sans', sans-serif" font-size="11" fill="#475569" letter-spacing="2">/ 100</text>
+            <text x="80" y="116" text-anchor="middle" font-family="'DM Sans', sans-serif" font-size="10" fill="#475569">NETWORK SCORE</text>
+          </svg>
+
+          <div class="findings-list">
+            <div class="finding crit">
+              <span class="finding-badge">CRITICAL</span>
+              <span class="finding-text">BitLocker not enabled — drive data exposed if stolen</span>
+            </div>
+            <div class="finding crit">
+              <span class="finding-badge">CRITICAL</span>
+              <span class="finding-text">Telnet open on 192.168.1.47 — plain text protocol</span>
+            </div>
+            <div class="finding warn">
+              <span class="finding-badge">WARNING</span>
+              <span class="finding-text">Router may be using default credentials</span>
+            </div>
+            <div class="finding warn">
+              <span class="finding-badge">WARNING</span>
+              <span class="finding-text">UPnP active — devices can open firewall ports</span>
+            </div>
+            <div class="finding pass">
+              <span class="finding-badge">PASS</span>
+              <span class="finding-text">Windows Firewall enabled on all profiles</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── FEATURES ─────────────────────────────────────────── -->
+<section class="features-section" id="features">
+  <div class="container">
+    <p class="section-label">Features</p>
+    <h2 class="section-title">Everything in one place.</h2>
+
+    <div class="features-grid">
+      <div class="feature-card">
+        <span class="feature-icon">⚔</span>
+        <div class="feature-title">Ransomware Canary Files</div>
+        <div class="feature-desc">Hidden sentinel files planted in your key folders. If ransomware touches them, SentinelHome101 alerts you — often before encryption spreads.</div>
+      </div>
+      <div class="feature-card">
+        <span class="feature-icon">◎</span>
+        <div class="feature-title">Network Device Discovery</div>
+        <div class="feature-desc">Every device on your network identified by IP, MAC address, and manufacturer. Open ports flagged with risk levels in plain English.</div>
+      </div>
+      <div class="feature-card">
+        <span class="feature-icon">◈</span>
+        <div class="feature-title">DNS Hijacking Detection</div>
+        <div class="feature-desc">Verifies your DNS responses have not been tampered with. A hijacked DNS can silently redirect you to fake websites even when you type a real address.</div>
+      </div>
+      <div class="feature-card">
+        <span class="feature-icon">◐</span>
+        <div class="feature-title">ARP Spoofing Monitor</div>
+        <div class="feature-desc">Checks your ARP table for duplicate MAC addresses — a reliable indicator of man-in-the-middle attacks on your local network.</div>
+      </div>
+      <div class="feature-card">
+        <span class="feature-icon">≡</span>
+        <div class="feature-title">Scan History & Change Detection</div>
+        <div class="feature-desc">Every scan is recorded. Compare results between scans to see new devices, resolved issues, and score changes over time.</div>
+      </div>
+      <div class="feature-card">
+        <span class="feature-icon">↗</span>
+        <div class="feature-title">One-Click Remediation</div>
+        <div class="feature-desc">Every finding includes a plain-English step-by-step fix — written for home users, not IT professionals. No technical background required.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── PRIVACY ──────────────────────────────────────────── -->
+<section class="privacy-section" id="privacy">
+  <div class="container">
+    <p class="section-label">Privacy</p>
+    <h2 class="section-title">Everything stays<br>on your machine.</h2>
+    <p class="section-body">SentinelHome101 runs entirely locally. No scan results, device data, or network information is ever transmitted outside your home.</p>
+
+    <div class="privacy-grid">
+      <div class="privacy-points">
+        <div class="privacy-point">
+          <div class="privacy-dot"></div>
+          <div>
+            <div class="privacy-point-title">No telemetry or analytics</div>
+            <div class="privacy-point-desc">We do not collect usage data, crash reports, or any information about how you use the app.</div>
+          </div>
+        </div>
+        <div class="privacy-point">
+          <div class="privacy-dot"></div>
+          <div>
+            <div class="privacy-point-title">No cloud storage</div>
+            <div class="privacy-point-desc">Scan history, device database, and settings are stored in a local SQLite file on your machine only.</div>
+          </div>
+        </div>
+        <div class="privacy-point">
+          <div class="privacy-dot"></div>
+          <div>
+            <div class="privacy-point-title">Local network only</div>
+            <div class="privacy-point-desc">All scanning communicates only with devices on your local subnet. Nothing leaves your network.</div>
+          </div>
+        </div>
+        <div class="privacy-point">
+          <div class="privacy-dot amber"></div>
+          <div>
+            <div class="privacy-point-title">Two opt-in external features</div>
+            <div class="privacy-point-desc">Internet speed test and credential breach check are disabled by default and require explicit opt-in. Both are clearly labeled.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="data-box">
+        <div class="data-box-header">Data destination by feature</div>
+        <div class="data-row">
+          <span class="data-key">Scan results</span>
+          <span class="data-val-local">LOCAL ONLY</span>
+        </div>
+        <div class="data-row">
+          <span class="data-key">Device inventory</span>
+          <span class="data-val-local">LOCAL ONLY</span>
+        </div>
+        <div class="data-row">
+          <span class="data-key">Security findings</span>
+          <span class="data-val-local">LOCAL ONLY</span>
+        </div>
+        <div class="data-row">
+          <span class="data-key">Settings & preferences</span>
+          <span class="data-val-local">LOCAL ONLY</span>
+        </div>
+        <div class="data-row">
+          <span class="data-key">Speed test (opt-in)</span>
+          <span class="data-val-opt">SPEEDTEST.NET</span>
+        </div>
+        <div class="data-row">
+          <span class="data-key">Breach check (opt-in)</span>
+          <span class="data-val-opt">HIBP HASH ONLY</span>
+        </div>
+        <div class="data-row">
+          <span class="data-key">Usage analytics</span>
+          <span class="data-val-never">NEVER</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── DOWNLOAD ─────────────────────────────────────────── -->
+<section class="download-section" id="download">
+  <div class="container">
+    <p class="section-label">Download</p>
+    <h2 class="section-title">Free. No account required.</h2>
+    <p class="section-body" style="margin: 0 auto;">One file. Double-click to run. No installer, no Python, no dependencies.</p>
+
+    <div class="download-box">
+      <div class="download-box-header">
+        <span class="download-filename">SentinelHome101.exe</span>
+        <span class="download-size">v1.0.0 · Windows 10/11</span>
+      </div>
+      <div class="download-box-body">
+        <div class="download-requirements">
+          <div class="req"><div class="req-dot"></div>Windows 10 or 11 (64-bit)</div>
+          <div class="req"><div class="req-dot"></div>No Python required</div>
+          <div class="req"><div class="req-dot"></div>No installation wizard</div>
+          <div class="req"><div class="req-dot"></div>Administrator rights (auto-prompted)</div>
+        </div>
+
+        <a href="https://github.com/SentinelHome101/SentinelHome101/releases/latest/download/SentinelHome101.exe"
+           class="btn-primary" style="justify-content: center;">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <path d="M8 1v9M4 7l4 4 4-4M2 13h12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          Download SentinelHome101.exe
+        </a>
+
+        <div class="download-warning">
+          <strong>Windows SmartScreen note:</strong> Windows may show an "Unknown Publisher" warning on first run. Click <strong>More info</strong> then <strong>Run anyway</strong>. This appears because the current release is not yet code-signed. The software is safe — source code is available on GitHub.
+        </div>
+
+        <div style="font-size:11px;color:var(--ghost-mute);text-align:center;line-height:1.6;padding:12px 0;">
+          SentinelHome101 is provided as-is without warranty of any kind. It is a diagnostic and reporting tool only — it does not modify your system or network configuration. Use at your own risk.
+        </div>
+
+        <p style="font-size:12px;color:var(--ghost-mute);text-align:center;">
+          First time? Read the
+          <a href="https://github.com/SentinelHome101/SentinelHome101/releases/latest/download/Installation_Guide.docx"
+             style="color:var(--ghost-dim);text-decoration:underline;">Installation Guide</a>
+          &nbsp;·&nbsp;
+          <a href="https://github.com/SentinelHome101/SentinelHome101/releases/latest/download/SentinelHome101_Changelog.txt"
+             style="color:var(--ghost-dim);text-decoration:underline;">Changelog</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── FAQ ──────────────────────────────────────────────── -->
+<section id="faq" style="padding:120px 0;border-top:1px solid var(--border);">
+  <div class="container">
+    <p class="section-label">FAQ</p>
+    <h2 class="section-title">Common questions.</h2>
+
+    <div style="margin-top:48px;max-width:720px;">
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          <span>Do I need to install Python or any other software?</span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-a">No. SentinelHome101.exe is completely self-contained. It includes everything it needs to run. Just double-click it — no Python, no extra downloads, no setup wizard.</div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          <span>Why does it ask for Administrator permission every time?</span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-a">Several of the 101 security checks require Windows Administrator access — for example, reading Windows Security Center status, querying system information, and running network configuration commands. The UAC prompt appears every time as a result. This is intentional for a security tool.</div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          <span>Is my data being sent anywhere?</span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-a">No. All 101 checks run entirely on your local machine and network. No scan results, device information, IP addresses, or personal data are sent to any server. Two features optionally connect to external services — internet speed test and credential breach check — both are disabled by default and require explicit opt-in.</div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          <span>What does the network score mean?</span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-a">SentinelHome101 starts every scan at 100 and deducts points for security findings. Each critical finding costs 15 points. Each warning costs 5 points. A score above 80 is good. A score between 50 and 79 is fair. A score below 50 means significant issues were found that need prompt attention.</div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          <span>What is a ransomware canary file?</span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-a">A small hidden file planted in key folders (Desktop, Documents, Downloads, Pictures). If ransomware begins encrypting your files it will modify these canary files in the process. SentinelHome101 monitors them on every scan and alerts you immediately if any are changed or deleted — often catching ransomware before it has time to encrypt your important data.</div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          <span>The app found an unknown device on my network. What should I do?</span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-a">First try to identify it — check your router's connected devices list. Common unknown devices include smart TVs, streaming boxes, smart speakers, and printers. If you cannot identify a device after investigation, change your WiFi password. Any device connected without your knowledge will be disconnected when the password changes.</div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          <span>Does SentinelHome101 fix problems automatically?</span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-a">No. SentinelHome101 is an audit and reporting tool — it finds problems and tells you how to fix them in plain English. It does not make changes to your system or network automatically. You remain in control of every change that is made.</div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          <span>How often should I run a scan?</span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-a">Running a Quick scan weekly is a good habit for most home users. Run a Standard scan monthly or any time something changes on your network — a new device is added, your router is reset, or you notice unusual behavior.</div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          <span>Where does SentinelHome101 store its data?</span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-a">All data is stored locally on your machine in C:\Users\[YourName]\AppData\Roaming\SentinelHome101\. This includes your scan history, device database, settings, and canary files. This data never leaves your machine.</div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          <span>How do I contact support?</span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-a">Email <a href="mailto:support@sentinelhome101.com" style="color:var(--ghost-dim);">support@sentinelhome101.com</a> with your Windows version, SentinelHome101 version number, and a description of the issue. Response time target is 48 hours on business days.</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ─── FOOTER ────────────────────────────────────────────── -->
 <footer>
   <div class="footer-left">
     SentinelHome101 v1.0.0<br>
-    support@sentinelhome101.com
+    support@sentinelhome101.com<br>
+    <span style="font-size:10px;line-height:1.8;">Provided as-is without warranty. Diagnostic tool only — does not modify your system.</span>
   </div>
   <div class="footer-right">
-    <a href="index.html">Home</a>
+    <a href="https://github.com/SentinelHome101/SentinelHome101">GitHub</a>
     &nbsp;·&nbsp;
-    <a href="index.html#faq">FAQ</a>
+    <a href="https://github.com/SentinelHome101/SentinelHome101/releases">Releases</a>
+    &nbsp;·&nbsp;
+    <a href="#faq">FAQ</a>
+    &nbsp;·&nbsp;
+    <a href="privacy.html">Privacy Policy</a>
     &nbsp;·&nbsp;
     <a href="mailto:support@sentinelhome101.com">Support</a>
   </div>
 </footer>
+
+<script>
+// FAQ toggle
+function toggleFaq(btn) {
+  const answer = btn.nextElementSibling;
+  const isOpen = answer.classList.contains('open');
+  // Close all
+  document.querySelectorAll('.faq-a').forEach(a => a.classList.remove('open'));
+  document.querySelectorAll('.faq-q').forEach(b => b.classList.remove('open'));
+  // Open clicked if it was closed
+  if (!isOpen) {
+    answer.classList.add('open');
+    btn.classList.add('open');
+  }
+}
+
+// Scroll-triggered tier animations
+const tiers = document.querySelectorAll('.tier');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach((entry, i) => {
+    if (entry.isIntersecting) {
+      setTimeout(() => entry.target.classList.add('visible'), i * 80);
+    }
+  });
+}, { threshold: 0.1 });
+tiers.forEach(t => observer.observe(t));
+
+// Smooth score gauge animation on scroll
+const gauge = document.querySelector('.big-score-gauge path:last-of-type');
+const gaugeObserver = new IntersectionObserver((entries) => {
+  if (entries[0].isIntersecting) {
+    gauge && (gauge.style.strokeDasharray = '170 283');
+  }
+}, { threshold: 0.5 });
+const gaugeSection = document.querySelector('.big-score');
+if (gaugeSection) gaugeObserver.observe(gaugeSection);
+</script>
 
 </body>
 </html>
