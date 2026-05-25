@@ -507,10 +507,13 @@ class NetworkChecker:
                 capture_output=True, text=True, timeout=10, creationflags=CREATE_NO_WINDOW
             )
 
+            # Initialize with safe defaults in case the command fails
+            # or returncode is non-zero — prevents use-before-assignment
+            source = "Unknown"
+            stratum = "Unknown"
+
             if result.returncode == 0:
                 output = result.stdout
-                source = "Unknown"
-                stratum = "Unknown"
 
                 for line in output.split('\n'):
                     if 'Source:' in line:
