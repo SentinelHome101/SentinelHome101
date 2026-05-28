@@ -793,6 +793,7 @@ footer {
     <li><a href="#what">What It Does</a></li>
     <li><a href="#features">Features</a></li>
     <li><a href="#privacy">Privacy</a></li>
+<li><a href="#transparency">Transparency</a></li>
     <li><a href="#faq">FAQ</a></li>
     <li><a href="#download" class="nav-cta">Download</a></li>
   </ul>
@@ -1106,9 +1107,27 @@ footer {
           Download SentinelHome101.exe
         </a>
 
-        <div class="download-warning">
-          <strong>Windows SmartScreen note:</strong> Windows may show an "Unknown Publisher" warning on first run. Click <strong>More info</strong> then <strong>Run anyway</strong>. This appears because the current release is not yet code-signed. The software is safe — source code is available on GitHub.
-        </div>
+<div class="download-warning">
+  <strong>Windows SmartScreen note:</strong> Windows may show an "Unknown Publisher"
+  warning on first run. Click <strong>More info</strong> then <strong>Run anyway</strong>.
+  This appears because the current release is not yet code-signed with a commercial
+  certificate. A signed release is planned. Source code is publicly available on GitHub
+  for independent review.
+</div>
+
+<div style="font-size:12px;color:var(--ghost-mute);background:rgba(56,139,253,0.06);
+     border:1px solid rgba(56,139,253,0.15);border-radius:2px;padding:12px 16px;
+     text-align:left;line-height:1.7;margin-top:8px;">
+  <strong style="color:#388BFD;">Security scanner note:</strong>
+  SentinelHome101 performs active network scanning — it reads Windows security
+  settings, runs netstat and ARP commands, and probes local network devices.
+  This behavior may cause automated sandbox tools (ANY.RUN, Cuckoo, etc.) to
+  flag it as suspicious. This is expected for any security audit tool.
+  The same behavior causes Nmap, Nessus, and Wireshark to receive similar flags.
+  The full source code is on
+  <a href="https://github.com/SentinelHome101/SentinelHome101"
+     style="color:#388BFD;">GitHub</a> for independent review.
+</div>
 
         <div style="font-size:11px;color:var(--ghost-mute);text-align:center;line-height:1.6;padding:12px 0;">
           SentinelHome101 is provided as-is without warranty of any kind. It is a diagnostic and reporting tool only — it does not modify your system or network configuration. Use at your own risk.
@@ -1123,6 +1142,79 @@ footer {
              style="color:var(--ghost-dim);text-decoration:underline;">Changelog</a>
         </p>
       </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── SECURITY & TRANSPARENCY ─────────────────────────── -->
+<section id="transparency" style="padding:80px 0;border-top:1px solid var(--border);background:var(--bg-2);">
+  <div class="container">
+    <p class="section-label">Security & Transparency</p>
+    <h2 class="section-title">Open by design.</h2>
+    <p class="section-body" style="margin:0 auto 48px;">
+      SentinelHome101 is a network security audit tool. It does things that
+      security scanners notice — and we want to be upfront about all of them.
+    </p>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;max-width:860px;">
+
+      <div style="background:var(--bg-3);border:1px solid var(--border);
+                  border-left:3px solid var(--safe);padding:20px 24px;border-radius:2px;">
+        <div style="font-size:13px;font-weight:500;color:var(--ghost);margin-bottom:8px;">
+          Why security scanners may flag it
+        </div>
+        <div style="font-size:13px;color:var(--ghost-dim);line-height:1.7;">
+          SentinelHome101 reads Windows registry settings, runs network commands
+          (netstat, arp, ipconfig), scans your local subnet for devices, and
+          probes open ports. Automated sandbox tools see this behavior without
+          context and may flag it. This is the same reason Nmap, Nessus, and
+          Wireshark receive similar flags. It is scanning your network — that
+          is the point.
+        </div>
+      </div>
+
+      <div style="background:var(--bg-3);border:1px solid var(--border);
+                  border-left:3px solid var(--safe);padding:20px 24px;border-radius:2px;">
+        <div style="font-size:13px;font-weight:500;color:var(--ghost);margin-bottom:8px;">
+          Source code is public
+        </div>
+        <div style="font-size:13px;color:var(--ghost-dim);line-height:1.7;">
+          Every line of SentinelHome101 is available on
+          <a href="https://github.com/SentinelHome101/SentinelHome101"
+             style="color:var(--ghost-dim);text-decoration:underline;">GitHub</a>.
+          You do not have to take our word for what it does — you can read it,
+          compile it yourself, or have someone you trust review it independently.
+          Nothing is hidden.
+        </div>
+      </div>
+
+      <div style="background:var(--bg-3);border:1px solid var(--border);
+                  border-left:3px solid var(--warning);padding:20px 24px;border-radius:2px;">
+        <div style="font-size:13px;font-weight:500;color:var(--ghost);margin-bottom:8px;">
+          Why it is currently unsigned
+        </div>
+        <div style="font-size:13px;color:var(--ghost-dim);line-height:1.7;">
+          The current release does not yet have a commercial code signing
+          certificate. This causes the Windows SmartScreen "Unknown Publisher"
+          warning. A signed release with a verified publisher name is planned.
+          Until then, the GitHub source code is the most transparent proof of
+          legitimacy available.
+        </div>
+      </div>
+
+      <div style="background:var(--bg-3);border:1px solid var(--border);
+                  border-left:3px solid var(--safe);padding:20px 24px;border-radius:2px;">
+        <div style="font-size:13px;font-weight:500;color:var(--ghost);margin-bottom:8px;">
+          What it does NOT do
+        </div>
+        <div style="font-size:13px;color:var(--ghost-dim);line-height:1.7;">
+          SentinelHome101 does not modify your system, install services, make
+          changes to your network, or transmit data outside your machine.
+          It reads and reports — it does not act. All findings require you
+          to take remediation steps manually.
+        </div>
+      </div>
+
     </div>
   </div>
 </section>
