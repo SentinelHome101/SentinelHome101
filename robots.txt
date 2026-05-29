@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+
+# Block build artifacts and assets that don't need indexing
+Disallow: /assets/
+
+# Sitemap location
+Sitemap: https://sentinelhome101.com/sitemap.xml

@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>How to Tell if Your Home Network Has Been Compromised — SentinelHome101</title>
+<meta name="description" content="Most home network intrusions go undetected for weeks or months. Here are the warning signs to look for and the steps to take if you think your network has been compromised.">
+<meta name="author" content="SentinelHome101">
+<meta name="keywords" content="home network compromised, signs of network intrusion, home network hacked, how to tell if network is hacked, network security warning signs">
+
+<link rel="canonical" href="https://sentinelhome101.com/blog/how-to-tell-if-home-network-compromised.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "How to Tell if Your Home Network Has Been Compromised",
+  "description": "Most home network intrusions go undetected for weeks or months. Here are the warning signs to look for.",
+  "author": { "@type": "Organization", "name": "SentinelHome101" },
+  "publisher": { "@type": "Organization", "name": "SentinelHome101", "url": "https://sentinelhome101.com" },
+  "datePublished": "2026-05-28",
+  "dateModified": "2026-05-28",
+  "mainEntityOfPage": "https://sentinelhome101.com/blog/how-to-tell-if-home-network-compromised.html"
+}
+</script>
+
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg: #0a0d12; --bg-2: #0f1318; --bg-3: #151a22;
+  --border: #1e2530; --border-2: #252d3a;
+  --ghost: #f1f5f9; --ghost-dim: #94a3b8; --ghost-mute: #334155;
+  --safe: #4ade80; --warning: #fbbf24; --critical: #f87171;
+  --serif: 'DM Serif Display', Georgia, serif;
+  --mono: 'DM Mono', monospace;
+  --sans: 'DM Sans', system-ui, sans-serif;
+}
+html { scroll-behavior: smooth; }
+body { background: var(--bg); color: var(--ghost); font-family: var(--sans);
+       font-weight: 300; line-height: 1.6; overflow-x: hidden; }
+nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 48px; height: 64px;
+      background: rgba(10,13,18,0.9); backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border); }
+.nav-logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+.nav-name { font-family: var(--serif); font-size: 18px; color: var(--ghost); }
+.nav-back { font-size: 13px; color: var(--ghost-dim); text-decoration: none;
+            letter-spacing: 0.04em; transition: color 0.2s; }
+.nav-back:hover { color: var(--ghost); }
+.article-wrap { max-width: 720px; margin: 0 auto; padding: 100px 48px 80px; }
+.article-label { font-family: var(--mono); font-size: 10px; color: var(--ghost-mute);
+                 letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 16px; }
+h1 { font-family: var(--serif); font-size: clamp(32px, 5vw, 48px); font-weight: 400;
+     line-height: 1.1; letter-spacing: -0.02em; color: var(--ghost); margin-bottom: 16px; }
+.article-meta { font-size: 13px; color: var(--ghost-mute); margin-bottom: 40px;
+                padding-bottom: 32px; border-bottom: 1px solid var(--border); }
+h2 { font-family: var(--serif); font-size: 26px; font-weight: 400; color: var(--ghost);
+     margin: 40px 0 16px; }
+h3 { font-size: 16px; font-weight: 500; color: var(--ghost); margin: 28px 0 10px; }
+p { font-size: 15px; color: var(--ghost-dim); line-height: 1.8; margin-bottom: 16px; }
+ul, ol { padding-left: 24px; margin-bottom: 16px; }
+li { font-size: 15px; color: var(--ghost-dim); line-height: 1.8; margin-bottom: 6px; }
+code { font-family: var(--mono); font-size: 13px; background: var(--bg-3);
+       color: var(--ghost); padding: 2px 6px; border-radius: 3px; }
+pre { background: var(--bg-3); border: 1px solid var(--border); border-radius: 4px;
+      padding: 16px 20px; overflow-x: auto; margin: 20px 0; }
+pre code { background: none; padding: 0; font-size: 13px; color: var(--ghost-dim); }
+.callout { background: var(--bg-2); border: 1px solid var(--border);
+           border-left: 3px solid var(--safe); padding: 16px 20px;
+           border-radius: 2px; margin: 24px 0; }
+.callout p { margin: 0; font-size: 14px; }
+.callout.warn { border-left-color: var(--warning); }
+.callout.crit { border-left-color: var(--critical); }
+.warning-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 24px 0; }
+.warning-card { background: var(--bg-2); border: 1px solid var(--border);
+                border-top: 2px solid var(--warning); padding: 16px; border-radius: 2px; }
+.warning-card h4 { font-size: 13px; font-weight: 500; color: var(--ghost); margin-bottom: 6px; }
+.warning-card p { font-size: 12px; color: var(--ghost-dim); margin: 0; line-height: 1.6; }
+.cta-box { background: var(--bg-2); border: 1px solid var(--border-2);
+           border-radius: 4px; padding: 32px; text-align: center; margin: 48px 0; }
+.cta-box h3 { margin: 0 0 8px; font-size: 20px; }
+.cta-box p { margin: 0 0 20px; }
+.btn { display: inline-flex; align-items: center; gap: 8px;
+       background: var(--ghost); color: var(--bg); text-decoration: none;
+       padding: 12px 28px; border-radius: 4px; font-size: 14px; font-weight: 500;
+       transition: opacity 0.2s; }
+.btn:hover { opacity: 0.88; }
+footer { border-top: 1px solid var(--border); padding: 32px 48px;
+         display: flex; justify-content: space-between; flex-wrap: wrap; gap: 16px; }
+.footer-left { font-family: var(--mono); font-size: 11px; color: var(--ghost-mute); line-height: 1.8; }
+.footer-right { font-size: 12px; color: var(--ghost-mute); }
+.footer-right a { color: var(--ghost-dim); text-decoration: none; }
+.footer-right a:hover { color: var(--ghost); }
+@media (max-width: 768px) {
+  nav { padding: 0 20px; } .article-wrap { padding: 90px 20px 60px; }
+  .warning-grid { grid-template-columns: 1fr; }
+  footer { padding: 24px 20px; flex-direction: column; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="/" class="nav-logo">
+    <svg width="24" height="28" viewBox="0 0 100 110" fill="none">
+      <path d="M50 2 L98 20 L98 68 C98 88 50 108 50 108 C50 108 2 88 2 68 L2 20 Z" fill="#0d1117" stroke="#1c2128" stroke-width="2"/>
+      <path d="M44 70 L44 34 L50 22 L56 34 L56 70 Z" fill="#f1f5f9"/>
+      <path d="M28 72 C28 66 38 68 50 68 C62 68 72 66 72 72 C72 78 62 76 50 76 C38 76 28 78 28 72Z" fill="#f1f5f9"/>
+      <rect x="46" y="76" width="8" height="7" rx="2" fill="#f1f5f9"/>
+      <ellipse cx="50" cy="85" rx="6" ry="4" fill="#f1f5f9"/>
+    </svg>
+    <span class="nav-name">SentinelHome101</span>
+  </a>
+  <a href="/" class="nav-back">← Back to home</a>
+</nav>
+
+<div class="article-wrap">
+
+  <p class="article-label">Home Network Security</p>
+  <h1>How to Tell if Your Home Network Has Been Compromised</h1>
+  <p class="article-meta">May 28, 2026 &nbsp;·&nbsp; 9 minute read &nbsp;·&nbsp; SentinelHome101</p>
+
+  <p>The uncomfortable reality about home network intrusions is that most of them go undetected for a long time. A 2024 IBM Security study found that the average time between initial compromise and detection was 194 days. That's over six months of someone having access to your network without you knowing.</p>
+
+  <p>Part of the reason is that modern attacks are designed to be quiet. They don't slow your computer down noticeably, they don't display obvious messages, and they don't do anything that would make you pick up the phone and call your ISP. They just sit there, quietly, doing what they were put there to do.</p>
+
+  <p>Knowing what to look for changes this. Here are the warning signs that something may be wrong, and what to do when you spot them.</p>
+
+  <h2>Warning Signs to Watch For</h2>
+
+  <div class="warning-grid">
+    <div class="warning-card">
+      <h4>Unexplained devices on your network</h4>
+      <p>A device you don't recognize appearing in your router's connected devices list is one of the clearest indicators that someone has gained access to your WiFi.</p>
+    </div>
+    <div class="warning-card">
+      <h4>Unusual outbound traffic</h4>
+      <p>If your internet usage stats show heavy data transfer when you're not actively using the internet, something on your network may be sending data without your knowledge.</p>
+    </div>
+    <div class="warning-card">
+      <h4>Changed router settings</h4>
+      <p>DNS servers you didn't set, new port forwarding rules, or a changed admin password are all indicators that someone has accessed your router's admin interface.</p>
+    </div>
+    <div class="warning-card">
+      <h4>Browser redirects</h4>
+      <p>Being sent to unexpected websites when you type familiar addresses, or search results that look slightly off, can indicate DNS hijacking at the router level.</p>
+    </div>
+    <div class="warning-card">
+      <h4>Antivirus or firewall suddenly disabled</h4>
+      <p>Malware commonly tries to disable security software as one of its first actions. If your Windows Defender turned itself off, that's a serious warning sign.</p>
+    </div>
+    <div class="warning-card">
+      <h4>New user accounts you didn't create</h4>
+      <p>Check your Windows user accounts periodically. Unauthorized accounts are a sign of a deeper compromise of that specific machine.</p>
+    </div>
+  </div>
+
+  <h2>Checking for Unauthorized Network Access</h2>
+
+  <h3>Check connected devices on your router</h3>
+
+  <p>Log into your router's admin interface (type your Default Gateway address into a browser). Navigate to the connected devices or DHCP clients section. Write down every device listed. Then go through your home and identify what each one is — phones, laptops, tablets, smart TVs, game consoles, smart speakers, printers, security cameras, smart plugs, and anything else that connects to WiFi.</p>
+
+  <p>Any device you cannot account for is worth investigating. Look up the MAC address manufacturer online and compare against what you own.</p>
+
+  <h3>Check your router's admin logs</h3>
+
+  <p>Most routers keep a log of admin login attempts and configuration changes. Look for this in your router's interface under System Log, Security Log, or similar. Login attempts from IP addresses that are not your own devices, or configuration changes at times when you were not using the router, both warrant attention.</p>
+
+  <h3>Check for unusual outbound connections on Windows</h3>
+
+  <p>Open Command Prompt as Administrator and run:</p>
+
+  <pre><code>netstat -b</code></pre>
+
+  <p>This shows every active network connection along with which program on your computer made it. Look for connections from programs you don't recognize, or connections to IP addresses in unusual countries. You can look up any IP address at <code>ipinfo.io</code> to see where it is located and who owns it.</p>
+
+  <h3>Check Windows Security event logs</h3>
+
+  <p>Windows keeps detailed security logs that record login attempts, account changes, and system modifications. To access them:</p>
+
+  <ol>
+    <li>Press Windows + R and type <code>eventvwr</code></li>
+    <li>Navigate to Windows Logs → Security</li>
+    <li>Look for Event ID 4625 (failed login attempts) and Event ID 4720 (new user account created)</li>
+  </ol>
+
+  <p>A large number of Event 4625 entries can indicate a brute force attack attempt. Any Event 4720 entries you didn't create yourself need immediate investigation.</p>
+
+  <div class="callout crit">
+    <p><strong>If you find strong evidence of a compromise</strong> — an unauthorized user account, a changed router password, or a device actively sending data to an unknown server — disconnect from the internet immediately and call your ISP before taking any other steps.</p>
+  </div>
+
+  <h2>Checking Individual Devices</h2>
+
+  <h3>Run a full antivirus scan</h3>
+
+  <p>Windows Defender is capable antivirus software for most users and it's free and built in. Open it from the Start menu and run a full scan — not a quick scan. A full scan checks every file on your computer and takes longer but is thorough.</p>
+
+  <h3>Check running processes</h3>
+
+  <p>Open Task Manager (Ctrl + Shift + Esc) and look through the Processes and Details tabs. Right click on anything unfamiliar and search online for its name. Legitimate Windows processes are well documented. Anything that shows up in searches as potentially malicious should be investigated further.</p>
+
+  <h3>Check startup programs</h3>
+
+  <p>Malware typically adds itself to startup so it runs every time you boot the computer. In Task Manager, click the Startup tab to see everything that runs when Windows starts. Disable anything you don't recognize and research it before re-enabling.</p>
+
+  <h2>If Your Network Has Been Compromised</h2>
+
+  <p>If you find clear evidence of a compromise, here is the response sequence in order:</p>
+
+  <ol>
+    <li><strong>Disconnect from the internet</strong> — unplug the ethernet or turn off WiFi. This stops any ongoing data exfiltration.</li>
+    <li><strong>Change your router admin password</strong> from a device on mobile data, not your home network</li>
+    <li><strong>Factory reset your router</strong> if you cannot account for all the configuration changes you find</li>
+    <li><strong>Change your WiFi password</strong> — this forces all devices to reconnect, and any unauthorized device will be locked out</li>
+    <li><strong>Run full antivirus scans</strong> on every device that was connected to the network</li>
+    <li><strong>Change passwords</strong> for any accounts you accessed from devices on that network, starting with email and financial accounts</li>
+    <li><strong>Enable two-factor authentication</strong> on all important accounts if you have not already</li>
+  </ol>
+
+  <div class="callout">
+    <p><strong>After a compromise:</strong> Monitor your financial accounts and credit reports for unusual activity over the following few months. If any banking credentials were potentially exposed, contact your bank directly.</p>
+  </div>
+
+  <h2>Making Intrusion Detection Part of Your Routine</h2>
+
+  <p>Checking for all of these signs manually on a regular basis is time consuming. SentinelHome101 automates most of it — it scans for unauthorized devices, checks for ARP spoofing and rogue DHCP servers that indicate active attacks, monitors ransomware canary files for tampering, analyzes outbound connection volume for botnet-like behavior, and checks your Windows security configuration for signs of tampering.</p>
+
+  <p>Running it once a week takes about 30 seconds on the quick scan setting and gives you a snapshot of your network's security status that would otherwise take an hour to assemble manually.</p>
+
+  <div class="cta-box">
+    <h3>Know if your network has been compromised</h3>
+    <p>SentinelHome101 checks for unauthorized devices, botnet behavior, ARP spoofing, and 98 other indicators. Free for Windows.</p>
+    <a href="https://github.com/SentinelHome101/SentinelHome101/releases/latest/download/SentinelHome101.exe" class="btn">Download Free</a>
+  </div>
+
+</div>
+
+<footer>
+  <div class="footer-left">SentinelHome101 v1.0.0<br>support@sentinelhome101.com<br>
+    <span style="font-size:10px;">Provided as-is without warranty. Diagnostic tool only.</span>
+  </div>
+  <div class="footer-right">
+    <a href="/">Home</a> &nbsp;·&nbsp;
+    <a href="/#faq">FAQ</a> &nbsp;·&nbsp;
+    <a href="/privacy.html">Privacy Policy</a> &nbsp;·&nbsp;
+    <a href="mailto:support@sentinelhome101.com">Support</a>
+  </div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>What Is DNS Hijacking and How Do You Detect It? — SentinelHome101</title>
+<meta name="description" content="DNS hijacking silently redirects your web traffic to fake websites — even when you type a real address. Learn how it works, how to detect it, and how to protect yourself.">
+<meta name="author" content="SentinelHome101">
+<meta name="keywords" content="DNS hijacking, what is DNS hijacking, DNS poisoning, detect DNS hijacking, home network DNS security, router DNS settings">
+
+<link rel="canonical" href="https://sentinelhome101.com/blog/what-is-dns-hijacking.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "What Is DNS Hijacking and How Do You Detect It?",
+  "description": "DNS hijacking silently redirects your web traffic to fake websites. Learn how to detect and prevent it.",
+  "author": { "@type": "Organization", "name": "SentinelHome101" },
+  "publisher": { "@type": "Organization", "name": "SentinelHome101", "url": "https://sentinelhome101.com" },
+  "datePublished": "2026-05-28",
+  "dateModified": "2026-05-28",
+  "mainEntityOfPage": "https://sentinelhome101.com/blog/what-is-dns-hijacking.html"
+}
+</script>
+
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg: #0a0d12; --bg-2: #0f1318; --bg-3: #151a22;
+  --border: #1e2530; --border-2: #252d3a;
+  --ghost: #f1f5f9; --ghost-dim: #94a3b8; --ghost-mute: #334155;
+  --safe: #4ade80; --warning: #fbbf24; --critical: #f87171;
+  --serif: 'DM Serif Display', Georgia, serif;
+  --mono: 'DM Mono', monospace;
+  --sans: 'DM Sans', system-ui, sans-serif;
+}
+html { scroll-behavior: smooth; }
+body { background: var(--bg); color: var(--ghost); font-family: var(--sans);
+       font-weight: 300; line-height: 1.6; overflow-x: hidden; }
+nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 48px; height: 64px;
+      background: rgba(10,13,18,0.9); backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border); }
+.nav-logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+.nav-name { font-family: var(--serif); font-size: 18px; color: var(--ghost); }
+.nav-back { font-size: 13px; color: var(--ghost-dim); text-decoration: none;
+            letter-spacing: 0.04em; transition: color 0.2s; }
+.nav-back:hover { color: var(--ghost); }
+.article-wrap { max-width: 720px; margin: 0 auto; padding: 100px 48px 80px; }
+.article-label { font-family: var(--mono); font-size: 10px; color: var(--ghost-mute);
+                 letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 16px; }
+h1 { font-family: var(--serif); font-size: clamp(32px, 5vw, 48px); font-weight: 400;
+     line-height: 1.1; letter-spacing: -0.02em; color: var(--ghost); margin-bottom: 16px; }
+.article-meta { font-size: 13px; color: var(--ghost-mute); margin-bottom: 40px;
+                padding-bottom: 32px; border-bottom: 1px solid var(--border); }
+h2 { font-family: var(--serif); font-size: 26px; font-weight: 400; color: var(--ghost);
+     margin: 40px 0 16px; }
+h3 { font-size: 16px; font-weight: 500; color: var(--ghost); margin: 28px 0 10px; }
+p { font-size: 15px; color: var(--ghost-dim); line-height: 1.8; margin-bottom: 16px; }
+ul, ol { padding-left: 24px; margin-bottom: 16px; }
+li { font-size: 15px; color: var(--ghost-dim); line-height: 1.8; margin-bottom: 6px; }
+code { font-family: var(--mono); font-size: 13px; background: var(--bg-3);
+       color: var(--ghost); padding: 2px 6px; border-radius: 3px; }
+pre { background: var(--bg-3); border: 1px solid var(--border); border-radius: 4px;
+      padding: 16px 20px; overflow-x: auto; margin: 20px 0; }
+pre code { background: none; padding: 0; font-size: 13px; color: var(--ghost-dim); }
+.callout { background: var(--bg-2); border: 1px solid var(--border);
+           border-left: 3px solid var(--safe); padding: 16px 20px;
+           border-radius: 2px; margin: 24px 0; }
+.callout p { margin: 0; font-size: 14px; }
+.callout.warn { border-left-color: var(--warning); }
+.callout.crit { border-left-color: var(--critical); }
+.diagram { background: var(--bg-2); border: 1px solid var(--border); padding: 24px;
+           border-radius: 4px; margin: 24px 0; font-family: var(--mono); font-size: 12px;
+           color: var(--ghost-dim); line-height: 2; }
+.diagram .highlight { color: var(--critical); }
+.cta-box { background: var(--bg-2); border: 1px solid var(--border-2);
+           border-radius: 4px; padding: 32px; text-align: center; margin: 48px 0; }
+.cta-box h3 { margin: 0 0 8px; font-size: 20px; }
+.cta-box p { margin: 0 0 20px; }
+.btn { display: inline-flex; align-items: center; gap: 8px;
+       background: var(--ghost); color: var(--bg); text-decoration: none;
+       padding: 12px 28px; border-radius: 4px; font-size: 14px; font-weight: 500;
+       transition: opacity 0.2s; }
+.btn:hover { opacity: 0.88; }
+footer { border-top: 1px solid var(--border); padding: 32px 48px;
+         display: flex; justify-content: space-between; flex-wrap: wrap; gap: 16px; }
+.footer-left { font-family: var(--mono); font-size: 11px; color: var(--ghost-mute); line-height: 1.8; }
+.footer-right { font-size: 12px; color: var(--ghost-mute); }
+.footer-right a { color: var(--ghost-dim); text-decoration: none; }
+.footer-right a:hover { color: var(--ghost); }
+@media (max-width: 768px) {
+  nav { padding: 0 20px; } .article-wrap { padding: 90px 20px 60px; }
+  footer { padding: 24px 20px; flex-direction: column; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="/" class="nav-logo">
+    <svg width="24" height="28" viewBox="0 0 100 110" fill="none">
+      <path d="M50 2 L98 20 L98 68 C98 88 50 108 50 108 C50 108 2 88 2 68 L2 20 Z" fill="#0d1117" stroke="#1c2128" stroke-width="2"/>
+      <path d="M44 70 L44 34 L50 22 L56 34 L56 70 Z" fill="#f1f5f9"/>
+      <path d="M28 72 C28 66 38 68 50 68 C62 68 72 66 72 72 C72 78 62 76 50 76 C38 76 28 78 28 72Z" fill="#f1f5f9"/>
+      <rect x="46" y="76" width="8" height="7" rx="2" fill="#f1f5f9"/>
+      <ellipse cx="50" cy="85" rx="6" ry="4" fill="#f1f5f9"/>
+    </svg>
+    <span class="nav-name">SentinelHome101</span>
+  </a>
+  <a href="/" class="nav-back">← Back to home</a>
+</nav>
+
+<div class="article-wrap">
+
+  <p class="article-label">Home Network Security</p>
+  <h1>What Is DNS Hijacking and How Do You Detect It?</h1>
+  <p class="article-meta">May 28, 2026 &nbsp;·&nbsp; 8 minute read &nbsp;·&nbsp; SentinelHome101</p>
+
+  <p>Imagine typing your bank's web address into the browser, seeing the padlock icon, and landing on what looks like your bank's login page — but it's actually a fake site designed to steal your credentials. You did everything right. You typed the correct address. You checked for HTTPS. And you still ended up somewhere dangerous.</p>
+
+  <p>That is what DNS hijacking looks like when it works well. It's one of the more unsettling attacks on home networks because it operates completely silently, it doesn't require you to click anything suspicious, and it can affect every device on your network simultaneously.</p>
+
+  <h2>What DNS Actually Does</h2>
+
+  <p>Before understanding how DNS hijacking works, it helps to understand what DNS is. DNS stands for Domain Name System and it functions essentially as the phone book of the internet.</p>
+
+  <p>When you type <code>google.com</code> into your browser, your computer doesn't actually know what that means at the network level. Networks communicate using IP addresses — numbers like <code>142.250.80.46</code>. DNS translates the human-readable name into the IP address your computer needs to make the connection.</p>
+
+  <p>This translation happens automatically and invisibly every time you visit any website. Your router handles most of these DNS lookups, forwarding them to your ISP's DNS servers or to a service like Google's <code>8.8.8.8</code>.</p>
+
+  <h2>How DNS Hijacking Works</h2>
+
+  <p>DNS hijacking means someone has tampered with this translation process so that certain domain names resolve to the wrong IP addresses — IP addresses controlled by an attacker.</p>
+
+  <div class="diagram">
+    <div>Normal: you type bank.com → DNS says 12.34.56.78 → you reach your real bank</div>
+    <div class="highlight">Hijacked: you type bank.com → DNS says 99.88.77.66 → you reach attacker's fake site</div>
+  </div>
+
+  <p>There are several ways this can happen on a home network:</p>
+
+  <ul>
+    <li><strong>Router compromise</strong> — an attacker gains access to your router (often through default credentials) and changes the DNS server settings to point to a malicious server they control</li>
+    <li><strong>Malware on a device</strong> — malware on one of your computers changes the DNS settings on that machine directly, affecting only that device</li>
+    <li><strong>ISP-level manipulation</strong> — some ISPs intercept DNS queries and redirect failed lookups to their own search pages. This is technically a form of DNS hijacking, though a usually benign one.</li>
+    <li><strong>DHCP poisoning</strong> — an attacker introduces a rogue DHCP server on the network that hands out a malicious DNS server address along with network configuration to new devices</li>
+  </ul>
+
+  <h2>Why It's Difficult to Detect</h2>
+
+  <p>The reason DNS hijacking is particularly effective is that everything looks normal from the user's perspective. The URL in your browser shows the correct address. The page loads quickly. If the attacker is sophisticated, the fake site looks identical to the real one.</p>
+
+  <p>Even HTTPS doesn't fully protect you. While a proper HTTPS implementation will show a certificate warning if the fake site's certificate does not match the domain, attackers who control DNS can also use fraudulently obtained certificates, or they may target sites where users ignore certificate warnings.</p>
+
+  <div class="callout crit">
+    <p><strong>The most dangerous DNS hijacking attacks</strong> target your router rather than individual devices. A compromised router affects every device on your network — phones, laptops, tablets, smart TVs, everything.</p>
+  </div>
+
+  <h2>How to Check for DNS Hijacking Manually</h2>
+
+  <h3>Method 1: Check your router's DNS settings</h3>
+
+  <p>Log into your router's admin interface (type your Default Gateway address into a browser). Find the DNS settings — usually under WAN settings, Internet settings, or Advanced network settings.</p>
+
+  <p>Your DNS servers should be one of these well-known legitimate services:</p>
+
+  <ul>
+    <li>Google: <code>8.8.8.8</code> and <code>8.8.4.4</code></li>
+    <li>Cloudflare: <code>1.1.1.1</code> and <code>1.0.0.1</code></li>
+    <li>OpenDNS: <code>208.67.222.222</code> and <code>208.67.220.220</code></li>
+    <li>Your ISP's DNS servers (usually in the 10.x.x.x or 172.x.x.x range)</li>
+  </ul>
+
+  <p>If you see any other IP addresses as your DNS servers — especially ones in unusual ranges — that warrants immediate investigation.</p>
+
+  <h3>Method 2: Run a DNS lookup test from Command Prompt</h3>
+
+  <p>Open Command Prompt and run:</p>
+
+  <pre><code>nslookup google.com</code></pre>
+
+  <p>The response will show which DNS server answered the query and what IP address it returned for google.com. You can verify the returned IP is legitimate by comparing it with a trusted source like Shodan or by running the same lookup from your phone on a mobile data connection (not WiFi) and comparing the results.</p>
+
+  <h2>How to Protect Yourself</h2>
+
+  <ul>
+    <li><strong>Change your router's admin password</strong> — this is the primary defense against router-level DNS hijacking</li>
+    <li><strong>Use DNS over HTTPS (DoH)</strong> — encrypts your DNS queries so they cannot be intercepted or tampered with in transit. Can be enabled in Windows Settings under Network and Internet settings.</li>
+    <li><strong>Keep router firmware updated</strong> — patched firmware closes the vulnerabilities attackers use to compromise routers</li>
+    <li><strong>Use a reputable DNS service</strong> — Cloudflare (1.1.1.1) and Google (8.8.8.8) both have active protections against known malicious domains</li>
+  </ul>
+
+  <div class="callout">
+    <p><strong>DNS over HTTPS in Windows 11:</strong> Go to Settings → Network and Internet → your WiFi or Ethernet connection → DNS server assignment → Edit → Manual → enable "Preferred DNS encryption: Encrypted only."</p>
+  </div>
+
+  <h2>Automated Detection with SentinelHome101</h2>
+
+  <p>Manually checking your DNS settings requires knowing what to look for and doing it regularly. SentinelHome101 automates this as part of its network security scan. It checks your DNS server configuration, verifies that known domain lookups return expected results, tests for DNS over HTTPS status, and flags any anomalies for your review.</p>
+
+  <p>It also checks for rogue DHCP servers — one of the other methods attackers use to push malicious DNS settings to devices on your network.</p>
+
+  <div class="cta-box">
+    <h3>Check your DNS configuration automatically</h3>
+    <p>SentinelHome101 detects DNS hijacking, rogue DHCP servers, and 99 other security issues. Free for Windows.</p>
+    <a href="https://github.com/SentinelHome101/SentinelHome101/releases/latest/download/SentinelHome101.exe" class="btn">Download Free</a>
+  </div>
+
+  <h2>What to Do if You Suspect DNS Hijacking</h2>
+
+  <ol>
+    <li>Log into your router and check the DNS server settings immediately</li>
+    <li>If the DNS servers look unfamiliar, change them to a known service like <code>1.1.1.1</code></li>
+    <li>Change your router's admin password</li>
+    <li>Run a full antivirus scan on every device on your network</li>
+    <li>Consider a factory reset of your router if you cannot identify how the settings were changed</li>
+    <li>Contact your ISP if the problem persists after a factory reset</li>
+  </ol>
+
+  <p>DNS hijacking is one of those attacks that sounds technical but is ultimately fairly straightforward to check for and defend against. The combination of a strong router password, current firmware, and DNS over HTTPS covers the vast majority of attack vectors available to someone targeting a typical home network.</p>
+
+</div>
+
+<footer>
+  <div class="footer-left">SentinelHome101 v1.0.0<br>support@sentinelhome101.com<br>
+    <span style="font-size:10px;">Provided as-is without warranty. Diagnostic tool only.</span>
+  </div>
+  <div class="footer-right">
+    <a href="/">Home</a> &nbsp;·&nbsp;
+    <a href="/#faq">FAQ</a> &nbsp;·&nbsp;
+    <a href="/privacy.html">Privacy Policy</a> &nbsp;·&nbsp;
+    <a href="mailto:support@sentinelhome101.com">Support</a>
+  </div>
+</footer>
+
+</body>
+</html>
