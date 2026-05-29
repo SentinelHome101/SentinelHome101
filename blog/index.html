@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Home Network Security Blog — SentinelHome101</title>
+<meta name="description" content="Plain-English guides to home network security. Learn how to check your network for vulnerabilities, detect threats, and protect your devices.">
+<meta name="author" content="SentinelHome101">
+<meta name="keywords" content="home network security, network security guides, wifi security tips, router security, home network protection">
+
+<link rel="canonical" href="https://sentinelhome101.com/blog/">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Blog",
+  "name": "SentinelHome101 — Home Network Security Blog",
+  "description": "Plain-English guides to home network security for Windows users.",
+  "url": "https://sentinelhome101.com/blog/",
+  "publisher": {
+    "@type": "Organization",
+    "name": "SentinelHome101",
+    "url": "https://sentinelhome101.com"
+  }
+}
+</script>
+
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg:         #0a0d12;
+  --bg-2:       #0f1318;
+  --bg-3:       #151a22;
+  --border:     #1e2530;
+  --border-2:   #252d3a;
+  --ghost:      #f1f5f9;
+  --ghost-dim:  #94a3b8;
+  --ghost-mute: #334155;
+  --safe:       #4ade80;
+  --warning:    #fbbf24;
+  --critical:   #f87171;
+  --serif:      'DM Serif Display', Georgia, serif;
+  --mono:       'DM Mono', 'Courier New', monospace;
+  --sans:       'DM Sans', system-ui, sans-serif;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--ghost);
+  font-family: var(--sans);
+  font-weight: 300;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.4;
+}
+
+/* NAV */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 48px;
+  height: 64px;
+  background: rgba(10, 13, 18, 0.85);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+}
+
+.nav-logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+}
+
+.nav-name {
+  font-family: var(--serif);
+  font-size: 18px;
+  color: var(--ghost);
+  letter-spacing: -0.01em;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  list-style: none;
+}
+
+.nav-links a {
+  color: var(--ghost-dim);
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  transition: color 0.2s;
+}
+
+.nav-links a:hover { color: var(--ghost); }
+
+.nav-links a.active { color: var(--ghost); }
+
+.nav-cta {
+  background: var(--ghost) !important;
+  color: var(--bg) !important;
+  padding: 8px 20px !important;
+  border-radius: 4px !important;
+  font-weight: 500 !important;
+  transition: opacity 0.2s !important;
+}
+
+.nav-cta:hover { opacity: 0.88 !important; }
+
+/* PAGE */
+.page-wrap {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 100px 48px 80px;
+  position: relative;
+  z-index: 1;
+}
+
+/* HEADER */
+.blog-header {
+  margin-bottom: 64px;
+  padding-bottom: 48px;
+  border-bottom: 1px solid var(--border);
+}
+
+.blog-eyebrow {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--ghost-mute);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+}
+
+.blog-title {
+  font-family: var(--serif);
+  font-size: clamp(36px, 5vw, 56px);
+  font-weight: 400;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: var(--ghost);
+  margin-bottom: 16px;
+}
+
+.blog-sub {
+  font-size: 16px;
+  color: var(--ghost-dim);
+  max-width: 560px;
+  line-height: 1.7;
+}
+
+/* ARTICLE GRID */
+.article-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+}
+
+.article-card {
+  background: var(--bg-2);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 28px 32px;
+  text-decoration: none;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  transition: border-color 0.2s, background 0.2s;
+  position: relative;
+  overflow: hidden;
+}
+
+.article-card:hover {
+  border-color: var(--border-2);
+  background: var(--bg-3);
+}
+
+.article-card::after {
+  content: '→';
+  position: absolute;
+  bottom: 28px;
+  right: 32px;
+  font-size: 18px;
+  color: var(--ghost-mute);
+  transition: color 0.2s, transform 0.2s;
+}
+
+.article-card:hover::after {
+  color: var(--ghost-dim);
+  transform: translateX(4px);
+}
+
+.article-tag {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--ghost-mute);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+.article-title {
+  font-family: var(--serif);
+  font-size: 22px;
+  font-weight: 400;
+  color: var(--ghost);
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+}
+
+.article-desc {
+  font-size: 14px;
+  color: var(--ghost-dim);
+  line-height: 1.7;
+  padding-bottom: 24px;
+}
+
+.article-meta {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--ghost-mute);
+  margin-top: auto;
+}
+
+/* FEATURED CARD (first article, full width) */
+.article-card.featured {
+  grid-column: 1 / -1;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 40px;
+  padding: 36px 40px;
+}
+
+.article-card.featured .article-content {
+  flex: 1;
+}
+
+.article-card.featured .article-title {
+  font-size: 28px;
+}
+
+.article-card.featured .article-desc {
+  font-size: 15px;
+  max-width: 560px;
+}
+
+.featured-badge {
+  display: inline-block;
+  font-family: var(--mono);
+  font-size: 9px;
+  color: var(--safe);
+  background: rgba(74, 222, 128, 0.1);
+  border: 1px solid rgba(74, 222, 128, 0.2);
+  padding: 3px 8px;
+  border-radius: 2px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+
+/* CTA SECTION */
+.cta-section {
+  margin-top: 72px;
+  padding: 48px;
+  background: var(--bg-2);
+  border: 1px solid var(--border-2);
+  border-radius: 4px;
+  text-align: center;
+}
+
+.cta-section h2 {
+  font-family: var(--serif);
+  font-size: 32px;
+  font-weight: 400;
+  color: var(--ghost);
+  margin-bottom: 12px;
+}
+
+.cta-section p {
+  font-size: 15px;
+  color: var(--ghost-dim);
+  max-width: 480px;
+  margin: 0 auto 28px;
+  line-height: 1.7;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--ghost);
+  color: var(--bg);
+  text-decoration: none;
+  padding: 14px 32px;
+  border-radius: 4px;
+  font-size: 15px;
+  font-weight: 500;
+  transition: opacity 0.2s, transform 0.2s;
+}
+
+.btn:hover { opacity: 0.88; transform: translateY(-1px); }
+
+/* FOOTER */
+footer {
+  border-top: 1px solid var(--border);
+  padding: 40px 48px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+  position: relative;
+  z-index: 1;
+}
+
+.footer-left {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--ghost-mute);
+  line-height: 1.8;
+}
+
+.footer-right { font-size: 12px; color: var(--ghost-mute); }
+.footer-right a { color: var(--ghost-dim); text-decoration: none; transition: color 0.2s; }
+.footer-right a:hover { color: var(--ghost); }
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  nav { padding: 0 20px; }
+  .nav-links { display: none; }
+  .page-wrap { padding: 90px 20px 60px; }
+  .article-grid { grid-template-columns: 1fr; }
+  .article-card.featured { flex-direction: column; gap: 16px; padding: 28px; }
+  .cta-section { padding: 32px 24px; }
+  footer { padding: 32px 20px; flex-direction: column; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="/" class="nav-logo">
+    <svg width="28" height="32" viewBox="0 0 100 110" fill="none">
+      <path d="M50 2 L98 20 L98 68 C98 88 50 108 50 108 C50 108 2 88 2 68 L2 20 Z"
+            fill="#0d1117" stroke="#1c2128" stroke-width="2"/>
+      <path d="M44 70 L44 34 L50 22 L56 34 L56 70 Z" fill="#f1f5f9"/>
+      <path d="M28 72 C28 66 38 68 50 68 C62 68 72 66 72 72 C72 78 62 76 50 76 C38 76 28 78 28 72Z" fill="#f1f5f9"/>
+      <rect x="46" y="76" width="8" height="7" rx="2" fill="#f1f5f9"/>
+      <ellipse cx="50" cy="85" rx="6" ry="4" fill="#f1f5f9"/>
+    </svg>
+    <span class="nav-name">SentinelHome101</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="/">Home</a></li>
+    <li><a href="/blog/" class="active">Blog</a></li>
+    <li><a href="/#faq">FAQ</a></li>
+    <li><a href="/#download" class="nav-cta">Download</a></li>
+  </ul>
+</nav>
+
+<!-- PAGE -->
+<div class="page-wrap">
+
+  <div class="blog-header">
+    <p class="blog-eyebrow">Home Network Security</p>
+    <h1 class="blog-title">Plain English.<br>Real Security.</h1>
+    <p class="blog-sub">Guides for home users who want to understand and protect their network, without needing an IT background to do it.</p>
+  </div>
+
+  <!-- ARTICLE GRID -->
+  <div class="article-grid">
+
+    <!-- Featured article -->
+    <a href="/blog/how-to-tell-if-home-network-compromised.html" class="article-card featured">
+      <div class="article-content">
+        <div class="featured-badge">Start here</div>
+        <div class="article-tag">Threat Detection &nbsp;·&nbsp; May 2026 &nbsp;·&nbsp; 9 min read</div>
+        <div class="article-title">How to Tell if Your Home Network Has Been Compromised</div>
+        <div class="article-desc">Most home network intrusions go undetected for months. Here are the warning signs to look for, how to investigate them, and what to do if you find something that should not be there.</div>
+        <div class="article-meta">May 28, 2026</div>
+      </div>
+    </a>
+
+    <!-- Article 2 -->
+    <a href="/blog/how-to-check-devices-on-home-network.html" class="article-card">
+      <div class="article-tag">Device Discovery &nbsp;·&nbsp; 7 min read</div>
+      <div class="article-title">How to Check What Devices Are on Your Home Network</div>
+      <div class="article-desc">A step-by-step guide to finding every device connected to your network, including ones you do not recognize. Four methods covered from simple to thorough.</div>
+      <div class="article-meta">May 28, 2026</div>
+    </a>
+
+    <!-- Article 3 -->
+    <a href="/blog/router-default-credentials.html" class="article-card">
+      <div class="article-tag">Router Security &nbsp;·&nbsp; 6 min read</div>
+      <div class="article-title">Is Your Router Still Using Default Credentials?</div>
+      <div class="article-desc">Default router passwords are publicly listed online. If yours has not been changed since installation, anyone on your network can log into your router settings.</div>
+      <div class="article-meta">May 28, 2026</div>
+    </a>
+
+    <!-- Article 4 -->
+    <a href="/blog/what-is-dns-hijacking.html" class="article-card">
+      <div class="article-tag">DNS Security &nbsp;·&nbsp; 8 min read</div>
+      <div class="article-title">What Is DNS Hijacking and How Do You Detect It?</div>
+      <div class="article-desc">DNS hijacking redirects your web traffic to fake websites silently, even when you type a real address. Here is how it works and what you can do about it.</div>
+      <div class="article-meta">May 28, 2026</div>
+    </a>
+
+    <!-- Article 5 -->
+    <a href="/blog/what-is-upnp-and-why-is-it-dangerous.html" class="article-card">
+      <div class="article-tag">Router Security &nbsp;·&nbsp; 7 min read</div>
+      <div class="article-title">What Is UPnP and Why Is It Dangerous?</div>
+      <div class="article-desc">UPnP lets devices on your network automatically open ports in your router's firewall without asking you. Here is why that is a problem and how to disable it.</div>
+      <div class="article-meta">May 28, 2026</div>
+    </a>
+
+  </div>
+
+  <!-- CTA -->
+  <div class="cta-section">
+    <h2>Stop reading. Start scanning.</h2>
+    <p>SentinelHome101 automates the checks described in every one of these articles, and 96 more. Free for Windows.</p>
+    <a href="https://github.com/SentinelHome101/SentinelHome101/releases/latest/download/SentinelHome101.exe" class="btn">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+        <path d="M8 1v9M4 7l4 4 4-4M2 13h12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      Download Free — Windows
+    </a>
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-left">
+    SentinelHome101 v1.0.0<br>
+    support@sentinelhome101.com<br>
+    <span style="font-size:10px;">Provided as-is without warranty. Diagnostic tool only.</span>
+  </div>
+  <div class="footer-right">
+    <a href="/">Home</a> &nbsp;·&nbsp;
+    <a href="/blog/">Blog</a> &nbsp;·&nbsp;
+    <a href="/#faq">FAQ</a> &nbsp;·&nbsp;
+    <a href="/privacy.html">Privacy Policy</a> &nbsp;·&nbsp;
+    <a href="mailto:support@sentinelhome101.com">Support</a>
+  </div>
+</footer>
+
+</body>
+</html>
