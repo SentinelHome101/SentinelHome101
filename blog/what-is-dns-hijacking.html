@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>What Is DNS Hijacking and How Do You Detect It? — SentinelHome101</title>
-<meta name="description" content="DNS hijacking silently redirects your web traffic to fake websites — even when you type a real address. Learn how it works, how to detect it, and how to protect yourself.">
+<title>What Is DNS Hijacking and How Do You Detect It?, SentinelHome101</title>
+<meta name="description" content="DNS hijacking silently redirects your web traffic to fake websites, even when you type a real address. Learn how it works, how to detect it, and how to protect yourself.">
 <meta name="author" content="SentinelHome101">
 <meta name="keywords" content="DNS hijacking, what is DNS hijacking, DNS poisoning, detect DNS hijacking, home network DNS security, router DNS settings">
 
@@ -121,7 +121,7 @@ footer { border-top: 1px solid var(--border); padding: 32px 48px;
   <h1>What Is DNS Hijacking and How Do You Detect It?</h1>
   <p class="article-meta">May 28, 2026 &nbsp;·&nbsp; 8 minute read &nbsp;·&nbsp; SentinelHome101</p>
 
-  <p>Imagine typing your bank's web address into the browser, seeing the padlock icon, and landing on what looks like your bank's login page — but it's actually a fake site designed to steal your credentials. You did everything right. You typed the correct address. You checked for HTTPS. And you still ended up somewhere dangerous.</p>
+  <p>Imagine typing your bank's web address into the browser, seeing the padlock icon, and landing on what looks like your bank's login page, but it's actually a fake site designed to steal your credentials. You did everything right. You typed the correct address. You checked for HTTPS. And you still ended up somewhere dangerous.</p>
 
   <p>That is what DNS hijacking looks like when it works well. It's one of the more unsettling attacks on home networks because it operates completely silently, it doesn't require you to click anything suspicious, and it can affect every device on your network simultaneously.</p>
 
@@ -129,13 +129,13 @@ footer { border-top: 1px solid var(--border); padding: 32px 48px;
 
   <p>Before understanding how DNS hijacking works, it helps to understand what DNS is. DNS stands for Domain Name System and it functions essentially as the phone book of the internet.</p>
 
-  <p>When you type <code>google.com</code> into your browser, your computer doesn't actually know what that means at the network level. Networks communicate using IP addresses — numbers like <code>142.250.80.46</code>. DNS translates the human-readable name into the IP address your computer needs to make the connection.</p>
+  <p>When you type <code>google.com</code> into your browser, your computer doesn't actually know what that means at the network level. Networks communicate using IP addresses, numbers like <code>142.250.80.46</code>. DNS translates the human-readable name into the IP address your computer needs to make the connection.</p>
 
   <p>This translation happens automatically and invisibly every time you visit any website. Your router handles most of these DNS lookups, forwarding them to your ISP's DNS servers or to a service like Google's <code>8.8.8.8</code>.</p>
 
   <h2>How DNS Hijacking Works</h2>
 
-  <p>DNS hijacking means someone has tampered with this translation process so that certain domain names resolve to the wrong IP addresses — IP addresses controlled by an attacker.</p>
+  <p>DNS hijacking means someone has tampered with this translation process so that certain domain names resolve to the wrong IP addresses, IP addresses controlled by an attacker.</p>
 
   <div class="diagram">
     <div>Normal: you type bank.com → DNS says 12.34.56.78 → you reach your real bank</div>
@@ -145,10 +145,10 @@ footer { border-top: 1px solid var(--border); padding: 32px 48px;
   <p>There are several ways this can happen on a home network:</p>
 
   <ul>
-    <li><strong>Router compromise</strong> — an attacker gains access to your router (often through default credentials) and changes the DNS server settings to point to a malicious server they control</li>
-    <li><strong>Malware on a device</strong> — malware on one of your computers changes the DNS settings on that machine directly, affecting only that device</li>
-    <li><strong>ISP-level manipulation</strong> — some ISPs intercept DNS queries and redirect failed lookups to their own search pages. This is technically a form of DNS hijacking, though a usually benign one.</li>
-    <li><strong>DHCP poisoning</strong> — an attacker introduces a rogue DHCP server on the network that hands out a malicious DNS server address along with network configuration to new devices</li>
+    <li><strong>Router compromise</strong>, an attacker gains access to your router (often through default credentials) and changes the DNS server settings to point to a malicious server they control</li>
+    <li><strong>Malware on a device</strong>, malware on one of your computers changes the DNS settings on that machine directly, affecting only that device</li>
+    <li><strong>ISP-level manipulation</strong>, some ISPs intercept DNS queries and redirect failed lookups to their own search pages. This is technically a form of DNS hijacking, though a usually benign one.</li>
+    <li><strong>DHCP poisoning</strong>, an attacker introduces a rogue DHCP server on the network that hands out a malicious DNS server address along with network configuration to new devices</li>
   </ul>
 
   <h2>Why It's Difficult to Detect</h2>
@@ -158,14 +158,14 @@ footer { border-top: 1px solid var(--border); padding: 32px 48px;
   <p>Even HTTPS doesn't fully protect you. While a proper HTTPS implementation will show a certificate warning if the fake site's certificate does not match the domain, attackers who control DNS can also use fraudulently obtained certificates, or they may target sites where users ignore certificate warnings.</p>
 
   <div class="callout crit">
-    <p><strong>The most dangerous DNS hijacking attacks</strong> target your router rather than individual devices. A compromised router affects every device on your network — phones, laptops, tablets, smart TVs, everything.</p>
+    <p><strong>The most dangerous DNS hijacking attacks</strong> target your router rather than individual devices. A compromised router affects every device on your network, phones, laptops, tablets, smart TVs, everything.</p>
   </div>
 
   <h2>How to Check for DNS Hijacking Manually</h2>
 
   <h3>Method 1: Check your router's DNS settings</h3>
 
-  <p>Log into your router's admin interface (type your Default Gateway address into a browser). Find the DNS settings — usually under WAN settings, Internet settings, or Advanced network settings.</p>
+  <p>Log into your router's admin interface (type your Default Gateway address into a browser). Find the DNS settings, usually under WAN settings, Internet settings, or Advanced network settings.</p>
 
   <p>Your DNS servers should be one of these well-known legitimate services:</p>
 
@@ -176,7 +176,7 @@ footer { border-top: 1px solid var(--border); padding: 32px 48px;
     <li>Your ISP's DNS servers (usually in the 10.x.x.x or 172.x.x.x range)</li>
   </ul>
 
-  <p>If you see any other IP addresses as your DNS servers — especially ones in unusual ranges — that warrants immediate investigation.</p>
+  <p>If you see any other IP addresses as your DNS servers, especially ones in unusual ranges, that warrants immediate investigation.</p>
 
   <h3>Method 2: Run a DNS lookup test from Command Prompt</h3>
 
@@ -189,10 +189,10 @@ footer { border-top: 1px solid var(--border); padding: 32px 48px;
   <h2>How to Protect Yourself</h2>
 
   <ul>
-    <li><strong>Change your router's admin password</strong> — this is the primary defense against router-level DNS hijacking</li>
-    <li><strong>Use DNS over HTTPS (DoH)</strong> — encrypts your DNS queries so they cannot be intercepted or tampered with in transit. Can be enabled in Windows Settings under Network and Internet settings.</li>
-    <li><strong>Keep router firmware updated</strong> — patched firmware closes the vulnerabilities attackers use to compromise routers</li>
-    <li><strong>Use a reputable DNS service</strong> — Cloudflare (1.1.1.1) and Google (8.8.8.8) both have active protections against known malicious domains</li>
+    <li><strong>Change your router's admin password</strong>, this is the primary defense against router-level DNS hijacking</li>
+    <li><strong>Use DNS over HTTPS (DoH)</strong>, encrypts your DNS queries so they cannot be intercepted or tampered with in transit. Can be enabled in Windows Settings under Network and Internet settings.</li>
+    <li><strong>Keep router firmware updated</strong>, patched firmware closes the vulnerabilities attackers use to compromise routers</li>
+    <li><strong>Use a reputable DNS service</strong>, Cloudflare (1.1.1.1) and Google (8.8.8.8) both have active protections against known malicious domains</li>
   </ul>
 
   <div class="callout">
@@ -203,7 +203,7 @@ footer { border-top: 1px solid var(--border); padding: 32px 48px;
 
   <p>Manually checking your DNS settings requires knowing what to look for and doing it regularly. SentinelHome101 automates this as part of its network security scan. It checks your DNS server configuration, verifies that known domain lookups return expected results, tests for DNS over HTTPS status, and flags any anomalies for your review.</p>
 
-  <p>It also checks for rogue DHCP servers — one of the other methods attackers use to push malicious DNS settings to devices on your network.</p>
+  <p>It also checks for rogue DHCP servers, one of the other methods attackers use to push malicious DNS settings to devices on your network.</p>
 
   <div class="cta-box">
     <h3>Check your DNS configuration automatically</h3>
