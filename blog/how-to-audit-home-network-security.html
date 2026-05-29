@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>How to Audit Your Home Network Security, SentinelHome101</title>
+<meta name="description" content="A step-by-step walkthrough for auditing your home network security. Covers devices, router settings, WiFi configuration, endpoint checks, and what to do with what you find.">
+<meta name="author" content="SentinelHome101">
+<meta name="keywords" content="home network security audit, audit home network, how to check home network security, network security assessment home, home network security review">
+
+<link rel="canonical" href="https://sentinelhome101.com/blog/how-to-audit-home-network-security.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "How to Audit Your Home Network Security",
+  "description": "A step-by-step walkthrough for auditing your home network security, covering devices, router settings, WiFi, and endpoint checks.",
+  "author": { "@type": "Organization", "name": "SentinelHome101" },
+  "publisher": { "@type": "Organization", "name": "SentinelHome101", "url": "https://sentinelhome101.com" },
+  "datePublished": "2026-05-29",
+  "dateModified": "2026-05-29",
+  "mainEntityOfPage": "https://sentinelhome101.com/blog/how-to-audit-home-network-security.html"
+}
+</script>
+
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg: #0a0d12; --bg-2: #0f1318; --bg-3: #151a22;
+  --border: #1e2530; --border-2: #252d3a;
+  --ghost: #f1f5f9; --ghost-dim: #94a3b8; --ghost-mute: #334155;
+  --safe: #4ade80; --warning: #fbbf24; --critical: #f87171;
+  --serif: 'DM Serif Display', Georgia, serif;
+  --mono: 'DM Mono', monospace;
+  --sans: 'DM Sans', system-ui, sans-serif;
+}
+html { scroll-behavior: smooth; }
+body { background: var(--bg); color: var(--ghost); font-family: var(--sans);
+       font-weight: 300; line-height: 1.6; overflow-x: hidden; }
+nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 48px; height: 64px;
+      background: rgba(10,13,18,0.9); backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border); }
+.nav-logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+.nav-name { font-family: var(--serif); font-size: 18px; color: var(--ghost); }
+.nav-back { font-size: 13px; color: var(--ghost-dim); text-decoration: none;
+            letter-spacing: 0.04em; transition: color 0.2s; }
+.nav-back:hover { color: var(--ghost); }
+.article-wrap { max-width: 720px; margin: 0 auto; padding: 100px 48px 80px; }
+.article-label { font-family: var(--mono); font-size: 10px; color: var(--ghost-mute);
+                 letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 16px; }
+h1 { font-family: var(--serif); font-size: clamp(32px, 5vw, 48px); font-weight: 400;
+     line-height: 1.1; letter-spacing: -0.02em; color: var(--ghost); margin-bottom: 16px; }
+.article-meta { font-size: 13px; color: var(--ghost-mute); margin-bottom: 40px;
+                padding-bottom: 32px; border-bottom: 1px solid var(--border); }
+h2 { font-family: var(--serif); font-size: 26px; font-weight: 400; color: var(--ghost);
+     margin: 40px 0 16px; }
+h3 { font-size: 16px; font-weight: 500; color: var(--ghost); margin: 28px 0 10px; }
+p { font-size: 15px; color: var(--ghost-dim); line-height: 1.8; margin-bottom: 16px; }
+ul, ol { padding-left: 24px; margin-bottom: 16px; }
+li { font-size: 15px; color: var(--ghost-dim); line-height: 1.8; margin-bottom: 6px; }
+code { font-family: var(--mono); font-size: 13px; background: var(--bg-3);
+       color: var(--ghost); padding: 2px 6px; border-radius: 3px; }
+.callout { background: var(--bg-2); border: 1px solid var(--border);
+           border-left: 3px solid var(--safe); padding: 16px 20px;
+           border-radius: 2px; margin: 24px 0; }
+.callout p { margin: 0; font-size: 14px; }
+.callout.warn { border-left-color: var(--warning); }
+.step-num { display: inline-block; font-family: var(--mono); font-size: 11px;
+            color: var(--ghost-mute); background: var(--bg-3);
+            padding: 2px 8px; border-radius: 2px; margin-bottom: 8px;
+            letter-spacing: 0.1em; }
+.cta-box { background: var(--bg-2); border: 1px solid var(--border-2);
+           border-radius: 4px; padding: 32px; text-align: center; margin: 48px 0; }
+.cta-box h3 { margin: 0 0 8px; font-size: 20px; color: var(--ghost); font-family: var(--serif); font-weight: 400; }
+.cta-box p { margin: 0 0 20px; }
+.btn { display: inline-flex; align-items: center; gap: 8px;
+       background: var(--ghost); color: var(--bg); text-decoration: none;
+       padding: 12px 28px; border-radius: 4px; font-size: 14px; font-weight: 500;
+       transition: opacity 0.2s; }
+.btn:hover { opacity: 0.88; }
+footer { border-top: 1px solid var(--border); padding: 32px 48px;
+         display: flex; justify-content: space-between; flex-wrap: wrap; gap: 16px; }
+.footer-left { font-family: var(--mono); font-size: 11px; color: var(--ghost-mute); line-height: 1.8; }
+.footer-right { font-size: 12px; color: var(--ghost-mute); }
+.footer-right a { color: var(--ghost-dim); text-decoration: none; }
+.footer-right a:hover { color: var(--ghost); }
+@media (max-width: 768px) {
+  nav { padding: 0 20px; } .article-wrap { padding: 90px 20px 60px; }
+  footer { padding: 24px 20px; flex-direction: column; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="/" class="nav-logo">
+    <svg width="24" height="28" viewBox="0 0 100 110" fill="none">
+      <path d="M50 2 L98 20 L98 68 C98 88 50 108 50 108 C50 108 2 88 2 68 L2 20 Z" fill="#0d1117" stroke="#1c2128" stroke-width="2"/>
+      <path d="M44 70 L44 34 L50 22 L56 34 L56 70 Z" fill="#f1f5f9"/>
+      <path d="M28 72 C28 66 38 68 50 68 C62 68 72 66 72 72 C72 78 62 76 50 76 C38 76 28 78 28 72Z" fill="#f1f5f9"/>
+      <rect x="46" y="76" width="8" height="7" rx="2" fill="#f1f5f9"/>
+      <ellipse cx="50" cy="85" rx="6" ry="4" fill="#f1f5f9"/>
+    </svg>
+    <span class="nav-name">SentinelHome101</span>
+  </a>
+  <a href="/blog/" class="nav-back">← Back to blog</a>
+</nav>
+
+<div class="article-wrap">
+
+  <p class="article-label">Security Guides</p>
+  <h1>How to Audit Your Home Network Security</h1>
+  <p class="article-meta">May 29, 2026 &nbsp;·&nbsp; 10 minute read &nbsp;·&nbsp; SentinelHome101</p>
+
+  <p>A security audit sounds like something that happens in a corporate IT department, with specialists and expensive software and a report that nobody reads. For home networks it doesn't have to be any of that. A home network audit is really just a structured way of answering one question: is my network set up in a way that protects me?</p>
+
+  <p>This guide walks through every area you should cover in a home network security audit, what to look for in each one, and what to do if you find something that needs fixing.</p>
+
+  <h2>What a Home Network Audit Covers</h2>
+
+  <p>A thorough home network audit has five main areas. Working through all five gives you a complete picture of your security posture.</p>
+
+  <ul>
+    <li><strong>Device inventory</strong> - every device connected to your network</li>
+    <li><strong>Router and WiFi configuration</strong> - settings that control access to your network</li>
+    <li><strong>Endpoint security</strong> - the Windows machines on your network</li>
+    <li><strong>Active threat indicators</strong> - signs that something is already wrong</li>
+    <li><strong>Data and backup practices</strong> - what happens if something goes wrong</li>
+  </ul>
+
+  <h2>Step 1: Device Inventory</h2>
+
+  <p>You cannot secure what you don't know about. The first step in any network audit is building a complete inventory of every device connected to your network.</p>
+
+  <p>Log into your router's admin interface and navigate to the connected devices section. Write down every device listed with its IP address, MAC address, and hostname. Then cross-reference that list against every device in your home that connects to WiFi.</p>
+
+  <p>Any device you cannot identify deserves closer investigation. Look up the MAC address manufacturer online. If you still can't match it to a known device after investigating, change your WiFi password. For a detailed walkthrough of this process, see our guide on <a href="/blog/how-to-check-devices-on-home-network.html" style="color:var(--ghost-dim);text-decoration:underline;">how to check what devices are on your home network</a>.</p>
+
+  <h2>Step 2: Router and WiFi Configuration</h2>
+
+  <p>Your router is the gateway between your home network and the internet. Its configuration has a bigger impact on your network security than almost anything else.</p>
+
+  <h3>Admin credentials</h3>
+  <p>Check that your router's admin username and password have been changed from the factory defaults. Default credentials for most router brands are publicly listed online. If you're still using admin/admin or admin/password, change them now.</p>
+
+  <h3>WiFi security protocol</h3>
+  <p>Your WiFi should be using WPA3 if your router supports it, or WPA2-AES at minimum. WPA (TKIP), WEP, and open networks are all insecure and should not be used. Find this setting under your router's wireless settings.</p>
+
+  <h3>UPnP</h3>
+  <p>Universal Plug and Play allows devices to automatically open ports in your firewall without asking you. This includes malware. Disable UPnP in your router settings unless you have a specific application that requires it.</p>
+
+  <h3>Remote management</h3>
+  <p>Remote management allows access to your router admin interface from outside your network. It should be disabled for the vast majority of home users.</p>
+
+  <h3>Firmware version</h3>
+  <p>Check whether a newer firmware version is available for your router and update if there is one. Router firmware updates frequently include security patches for known vulnerabilities.</p>
+
+  <h3>DNS configuration</h3>
+  <p>Check your router's DNS server settings and make sure they are set to a known legitimate service like Cloudflare (1.1.1.1) or Google (8.8.8.8). Unusual DNS server addresses can indicate your router has been compromised. Read more about this in our guide on <a href="/blog/what-is-dns-hijacking.html" style="color:var(--ghost-dim);text-decoration:underline;">DNS hijacking and how to detect it</a>.</p>
+
+  <h2>Step 3: Endpoint Security</h2>
+
+  <p>The Windows computers on your network have their own security configuration that is separate from the network itself. A compromised endpoint is often the starting point for a broader network attack.</p>
+
+  <h3>Windows Defender and antivirus</h3>
+  <p>Verify that Windows Defender is enabled and up to date, or that you have another reputable antivirus solution actively running. Check that no exclusions have been added that shouldn't be there.</p>
+
+  <h3>Disk encryption</h3>
+  <p>BitLocker should be enabled on any Windows machine that contains personal or financial information. Without disk encryption, anyone who gains physical access to your machine can read all your files regardless of your login password.</p>
+
+  <h3>OS patches</h3>
+  <p>Check that Windows Update is set to install updates automatically and that there are no pending updates waiting to be applied. Unpatched vulnerabilities are one of the most common entry points for malware.</p>
+
+  <h3>Secure Boot</h3>
+  <p>Secure Boot is a UEFI feature that prevents unauthorized operating systems and bootloaders from running on your computer. It should be enabled on modern Windows machines.</p>
+
+  <h3>User accounts</h3>
+  <p>Review the user accounts on your Windows machine and remove any that shouldn't be there. Standard user accounts (rather than administrator accounts) should be used for day-to-day computing.</p>
+
+  <h3>Screen lock</h3>
+  <p>Your machine should be configured to lock automatically after a period of inactivity. Open Settings and search for screen timeout to verify this is set to a reasonable interval, 5 to 15 minutes is appropriate for most people.</p>
+
+  <h2>Step 4: Active Threat Indicators</h2>
+
+  <p>Once you have checked the configuration, look for signs that something may already be wrong.</p>
+
+  <h3>ARP table</h3>
+  <p>Open Command Prompt and run <code>arp -a</code>. Look for any MAC address that appears more than once for different IP addresses. Duplicate MAC addresses can indicate ARP spoofing, where an attacker is intercepting your network traffic.</p>
+
+  <h3>Outbound connections</h3>
+  <p>Run <code>netstat -b</code> in Command Prompt as Administrator to see every active network connection and which program made it. Connections from programs you don't recognize deserve investigation.</p>
+
+  <h3>DHCP servers</h3>
+  <p>Run <code>ipconfig /all</code> and check how many DHCP servers are listed. There should only be one. Multiple DHCP servers can indicate a rogue DHCP attack on your network.</p>
+
+  <h2>Step 5: Data and Backup Practices</h2>
+
+  <p>A security audit isn't complete without considering what happens if something goes wrong despite your precautions.</p>
+
+  <p>The 3-2-1 backup rule is the standard recommendation: three copies of important data, on two different types of media, with one copy stored offsite or in the cloud. If you don't have at least one automated backup of your important files running regularly, set one up before you finish this audit.</p>
+
+  <div class="callout warn">
+    <p><strong>Ransomware note:</strong> Local backups alone are not sufficient protection against ransomware. Ransomware frequently targets connected backup drives. An offsite or cloud backup that is not continuously connected to your machine is the most reliable protection.</p>
+  </div>
+
+  <h2>How Long a Manual Audit Takes</h2>
+
+  <p>Working through all five areas manually takes most people between one and three hours, depending how many devices they have and how familiar they are with their router's admin interface. It's not a quick process, but for most home users once a year is sufficient for a full manual audit.</p>
+
+  <p>SentinelHome101 automates all of the technical checks in this audit and runs them in about 30 seconds for a Quick scan. It covers device discovery, router configuration checks, endpoint security, active threat indicators, and more, and presents every finding with a plain-English explanation and remediation steps. You can use the manual process above to understand what it's checking, and let the tool handle the execution.</p>
+
+  <div class="cta-box">
+    <h3>Automate your home network audit</h3>
+    <p>SentinelHome101 runs all 101 checks from this guide and more. Plain English findings, step-by-step fixes. Free for Windows.</p>
+    <a href="https://github.com/SentinelHome101/SentinelHome101/releases/latest/download/SentinelHome101.exe" class="btn">Download Free</a>
+  </div>
+
+</div>
+
+<footer>
+  <div class="footer-left">SentinelHome101 v1.0.0<br>support@sentinelhome101.com<br>
+    <span style="font-size:10px;">Provided as-is without warranty. Diagnostic tool only.</span>
+  </div>
+  <div class="footer-right">
+    <a href="/">Home</a> &nbsp;·&nbsp;
+    <a href="/blog/">Blog</a> &nbsp;·&nbsp;
+    <a href="/#faq">FAQ</a> &nbsp;·&nbsp;
+    <a href="/privacy.html">Privacy Policy</a> &nbsp;·&nbsp;
+    <a href="mailto:support@sentinelhome101.com">Support</a>
+  </div>
+</footer>
+
+</body>
+</html>
