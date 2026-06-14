@@ -12,51 +12,51 @@
 =============================================================
 """
 
-import tkinter as tk
-from tkinter import filedialog, messagebox
-import os
-import datetime
-import webbrowser
-from modules.constants import *
-from modules.theme import ThemeManager
+import tkinter as tk                      # Main GUI library
+from tkinter import filedialog, messagebox # File dialogs and message boxes
+import os                                  # File path operations
+import datetime                            # Date and time for report naming
+import webbrowser                          # Opens reports in browser
+from modules.constants import *            # App-wide constants (colors, fonts, etc.)
+from modules.theme import ThemeManager     # Theme switching support
 
 
 class ReportsTab:
     """Builds and manages the Reports & Settings tab."""
 
     def __init__(self, parent, theme, db, toggle_theme_callback, status_callback):
-        self.parent = parent
-        self.theme = theme
-        self.db = db
-        self.toggle_theme_callback = toggle_theme_callback
-        self.status_callback = status_callback
-        self.last_scan_results = None
+        self.parent = parent                                    # Parent widget this tab lives in
+        self.theme = theme                                      # Theme manager for colors and fonts
+        self.db = db                                            # Database for settings and scan data
+        self.toggle_theme_callback = toggle_theme_callback      # Callback to switch dark/light mode
+        self.status_callback = status_callback                  # Callback to update status bar
+        self.last_scan_results = None                           # Stores most recent scan results
 
-        self._build()
-        self.theme.register(self._apply_theme)
+        self._build()                           # Build the tab UI
+        self.theme.register(self._apply_theme)  # Register for theme change notifications
 
 
     def _build(self):
         """Builds the reports and settings tab layout."""
-        # Scrollable canvas
+        # Scrollable canvas so content can scroll if it exceeds window height
         self.canvas = tk.Canvas(
             self.parent, bg=self.theme.bg_primary, highlightthickness=0)
         sb = tk.Scrollbar(self.parent, orient='vertical', command=self.canvas.yview)
-        self.canvas.configure(yscrollcommand=sb.set)
-        sb.pack(side='right', fill='y')
-        self.canvas.pack(side='left', fill='both', expand=True)
+        self.canvas.configure(yscrollcommand=sb.set)            # Link scrollbar to canvas
+        sb.pack(side='right', fill='y')                         # Scrollbar on right edge
+        self.canvas.pack(side='left', fill='both', expand=True) # Canvas fills remaining space
 
-        self.inner = tk.Frame(self.canvas, bg=self.theme.bg_primary)
+        self.inner = tk.Frame(self.canvas, bg=self.theme.bg_primary)  # Inner frame holds all content
         self.win_id = self.canvas.create_window(
-            (0, 0), window=self.inner, anchor='nw')
+            (0, 0), window=self.inner, anchor='nw')             # Embed inner frame in canvas
         self.inner.bind('<Configure>', lambda e: self.canvas.configure(
-            scrollregion=self.canvas.bbox('all')))
+            scrollregion=self.canvas.bbox('all')))              # Update scroll region when content changes
         self.canvas.bind('<Configure>', lambda e: self.canvas.itemconfig(
-            self.win_id, width=e.width))
+            self.win_id, width=e.width))                        # Stretch inner frame to canvas width
         self.canvas.bind_all('<MouseWheel>', lambda e: self.canvas.yview_scroll(
-            int(-1 * (e.delta / 120)), 'units'))
+            int(-1 * (e.delta / 120)), 'units'))                # Enable mouse wheel scrolling
 
-        # Header
+        # Header row with tab title
         hdr = tk.Frame(self.inner, bg=self.theme.bg_primary)
         hdr.pack(fill='x', padx=PADDING_LG, pady=PADDING_LG)
         tk.Label(hdr, text="Reports & Settings",
@@ -64,19 +64,19 @@ class ReportsTab:
                  bg=self.theme.bg_primary,
                  fg=self.theme.text_primary).pack(side='left')
 
-        # Two column layout
+        # Two column layout — left for reports, right for settings
         cols = tk.Frame(self.inner, bg=self.theme.bg_primary)
         cols.pack(fill='both', expand=True,
                   padx=PADDING_LG, pady=(0, PADDING_LG))
         left = tk.Frame(cols, bg=self.theme.bg_primary)
-        left.pack(side='left', fill='both', expand=True, padx=(0, 8))
+        left.pack(side='left', fill='both', expand=True, padx=(0, 8))  # Left column with gap
         right = tk.Frame(cols, bg=self.theme.bg_primary)
-        right.pack(side='right', fill='both', expand=True)
+        right.pack(side='right', fill='both', expand=True)              # Right column
 
-        self._build_export_panel(left)
-        self._build_report_history(left)
-        self._build_settings_panel(right)
-        self._build_help_panel(right)
+        self._build_export_panel(left)      # Export buttons in left column
+        self._build_report_history(left)    # Report history in left column
+        self._build_settings_panel(right)   # Settings toggles in right column
+        self._build_help_panel(right)       # Help glossary in right column
 
 
     def _build_export_panel(self, parent):
@@ -85,6 +85,7 @@ class ReportsTab:
         inner = tk.Frame(p, bg=self.theme.bg_secondary)
         inner.pack(fill='x', padx=PADDING_MD, pady=PADDING_MD)
 
+        # List of export buttons with their labels and handler functions
         buttons = [
             ("Export HTML Report (dark theme)",    self._export_html_dark),
             ("Export HTML Report (light theme)",   self._export_html_light),
@@ -92,7 +93,7 @@ class ReportsTab:
             ("Export Device Data (.csv)",          self._export_csv),
         ]
 
-        for label, cmd in buttons:
+        for label, cmd in buttons:                          # Create one button per export type
             btn = tk.Button(
                 inner, text=label,
                 font=self.theme.font(size=FONT_SIZE_SM),
@@ -100,7 +101,7 @@ class ReportsTab:
                 relief='flat', padx=10, pady=6,
                 cursor="hand2", anchor='w',
                 command=cmd)
-            btn.pack(fill='x', pady=2)
+            btn.pack(fill='x', pady=2)                      # Stack buttons vertically
 
 
     def _build_report_history(self, parent):
@@ -108,7 +109,7 @@ class ReportsTab:
         p = self._panel(parent, "REPORT HISTORY")
         self.history_frame = tk.Frame(p, bg=self.theme.bg_secondary)
         self.history_frame.pack(fill='x', padx=PADDING_MD, pady=PADDING_MD)
-        self._refresh_report_history()
+        self._refresh_report_history()                      # Populate with existing report files
 
 
     def _build_settings_panel(self, parent):
@@ -117,17 +118,17 @@ class ReportsTab:
         inner = tk.Frame(p, bg=self.theme.bg_secondary)
         inner.pack(fill='x', padx=PADDING_MD, pady=PADDING_MD)
 
-        # Network name
+        # Network name setting row
         self._setting_row(inner, "Network name",
                           self.db.get_setting('network_name', 'Home Network'),
                           self._edit_network_name)
 
-        # Scan profile
+        # Default scan profile setting row
         self._setting_row(inner, "Default scan profile",
                           self.db.get_setting('scan_profile', DEFAULT_SCAN_PROFILE).title(),
                           self._change_scan_profile)
 
-        # Theme toggle
+        # Dark mode toggle row
         theme_row = tk.Frame(inner, bg=self.theme.bg_secondary)
         theme_row.pack(fill='x', pady=4)
         tk.Label(theme_row, text="Dark mode",
@@ -145,33 +146,72 @@ class ReportsTab:
             cursor="hand2",
             command=self._toggle_theme)
         self.theme_btn.pack(side='right')
-        tk.Frame(inner, bg=self.theme.border_light, height=1).pack(fill='x', pady=4)
+        tk.Frame(inner, bg=self.theme.border_light, height=1).pack(fill='x', pady=4)  # Divider
 
-        # Speed test opt-in
+        # Speed test opt-in toggle
         self._toggle_setting(inner,
                              "Internet speed test",
                              "Connects to Speedtest.net — opt-in",
                              'speedtest_enabled',
                              external=True)
 
-        # HIBP opt-in
+        # HIBP credential breach check opt-in toggle
         self._toggle_setting(inner,
                              "Credential breach check",
                              "Sends hashed email to HaveIBeenPwned.com — opt-in",
                              'hibp_enabled',
                              external=True)
 
-        # Scheduled scan
+        # HIBP API key entry row
+        hibp_key_row = tk.Frame(inner, bg=self.theme.bg_secondary)  # Row container for API key setting
+        hibp_key_row.pack(fill='x', pady=4)                         # Pack with vertical padding
+
+        tk.Label(                                           # Label on the left side of the row
+            hibp_key_row,
+            text="HIBP API key",                           # Setting name shown to user
+            font=self.theme.font(size=FONT_SIZE_SM),       # Standard small font
+            bg=self.theme.bg_secondary,                    # Match panel background
+            fg=self.theme.text_primary                     # Primary text color
+        ).pack(side='left')                                # Left-align the label
+
+        current_key = self.db.get_setting('hibp_api_key', '')  # Read current key from database
+        key_status = "Set" if current_key else "Not set"       # Show status not actual key value
+
+        self.hibp_key_status = tk.Label(                   # Status label shows Set or Not set
+            hibp_key_row,
+            text=key_status,                               # Current status text
+            font=self.theme.font(size=FONT_SIZE_XS),       # Smaller font for status
+            bg=self.theme.bg_secondary,                    # Match panel background
+            fg=COLOR_SAFE if current_key else self.theme.text_muted  # Green if set, muted if not
+        )
+        self.hibp_key_status.pack(side='right', padx=(0, 8))  # Right-align with small gap
+
+        tk.Button(                                          # Edit button opens the key entry dialog
+            hibp_key_row,
+            text="Edit",                                    # Button label
+            font=self.theme.font(size=FONT_SIZE_XS),       # Small font matching other setting buttons
+            bg=self.theme.bg_tertiary,                     # Tertiary background for secondary actions
+            fg=self.theme.text_secondary,                  # Secondary text color
+            relief='flat',                                 # No border
+            padx=8, pady=2,                               # Internal padding
+            cursor="hand2",                                # Hand cursor on hover
+            command=self._edit_hibp_key                    # Opens the key entry dialog
+        ).pack(side='right')                               # Right-align button before status label
+
+        tk.Frame(inner, bg=self.theme.border_light, height=1).pack(fill='x', pady=4)  # Divider line
+
+        # Weekly scan reminder toggle
         self._toggle_setting(inner,
                              "Weekly scheduled scan reminder",
                              "Shows reminder when app launches after 7 days",
                              'scan_schedule_enabled')
 
-        # About section
+        # About section panel
         about_p = self._panel(parent, "ABOUT")
         about_inner = tk.Frame(about_p, bg=self.theme.bg_secondary)
         about_inner.pack(fill='x', padx=PADDING_MD, pady=PADDING_MD)
 
+        # App info lines with different colors for hierarchy
         for line, color in [
             (f"{APP_NAME}", self.theme.accent),
             (f"Version {APP_VERSION}", self.theme.text_primary),
@@ -189,6 +229,7 @@ class ReportsTab:
         inner = tk.Frame(p, bg=self.theme.bg_secondary)
         inner.pack(fill='x', padx=PADDING_MD, pady=PADDING_MD)
 
+        # Each tuple is (topic title, explanation body)
         topics = [
             ("What is UPnP?",
              "Universal Plug and Play. A protocol that lets devices automatically "
@@ -246,7 +287,7 @@ class ReportsTab:
              "A score above 80 is good. 50-79 is fair. Below 50 needs attention."),
         ]
 
-        for title, body in topics:
+        for title, body in topics:          # Build one collapsible item per topic
             self._help_item(inner, title, body)
 
 
@@ -255,19 +296,19 @@ class ReportsTab:
         item_frame = tk.Frame(parent, bg=self.theme.bg_secondary)
         item_frame.pack(fill='x', pady=2)
 
-        # Title button (toggles body visibility)
-        expanded = tk.BooleanVar(value=False)
-        body_frame = tk.Frame(item_frame, bg=self.theme.bg_secondary)
+        expanded = tk.BooleanVar(value=False)           # Tracks whether this item is expanded
+        body_frame = tk.Frame(item_frame, bg=self.theme.bg_secondary)  # Hidden body frame
 
         def toggle():
+            """Shows or hides the body text when the title is clicked."""
             if expanded.get():
-                body_frame.pack_forget()
+                body_frame.pack_forget()                # Hide body
                 expanded.set(False)
-                btn.configure(text=f"▶  {title}")
+                btn.configure(text=f"▶  {title}")      # Reset to collapsed arrow
             else:
-                body_frame.pack(fill='x', padx=8, pady=(0, 6))
+                body_frame.pack(fill='x', padx=8, pady=(0, 6))  # Show body
                 expanded.set(True)
-                btn.configure(text=f"▼  {title}")
+                btn.configure(text=f"▼  {title}")      # Change to expanded arrow
 
         btn = tk.Button(
             item_frame, text=f"▶  {title}",
@@ -282,31 +323,31 @@ class ReportsTab:
                  bg=self.theme.bg_secondary, fg=self.theme.text_secondary,
                  wraplength=280, justify='left').pack(anchor='w', padx=8)
 
-        tk.Frame(parent, bg=self.theme.border_light, height=1).pack(fill='x')
+        tk.Frame(parent, bg=self.theme.border_light, height=1).pack(fill='x')  # Divider between items
 
 
     def _setting_row(self, parent, label, value, command):
-        """Builds a setting row with label, value, and change button."""
+        """Builds a setting row with label, current value, and change button."""
         row = tk.Frame(parent, bg=self.theme.bg_secondary)
         row.pack(fill='x', pady=4)
         tk.Label(row, text=label,
                  font=self.theme.font(size=FONT_SIZE_SM),
                  bg=self.theme.bg_secondary,
-                 fg=self.theme.text_primary).pack(side='left')
+                 fg=self.theme.text_primary).pack(side='left')          # Setting name on left
         tk.Button(row, text="Change",
                   font=self.theme.font(size=FONT_SIZE_XS),
                   bg=self.theme.bg_tertiary, fg=self.theme.text_secondary,
                   relief='flat', padx=6, pady=1,
-                  cursor="hand2", command=command).pack(side='right')
+                  cursor="hand2", command=command).pack(side='right')   # Change button on right
         tk.Label(row, text=value,
                  font=self.theme.font(size=FONT_SIZE_SM),
                  bg=self.theme.bg_secondary,
-                 fg=self.theme.text_secondary).pack(side='right', padx=8)
-        tk.Frame(parent, bg=self.theme.border_light, height=1).pack(fill='x')
+                 fg=self.theme.text_secondary).pack(side='right', padx=8)  # Current value next to button
+        tk.Frame(parent, bg=self.theme.border_light, height=1).pack(fill='x')  # Divider
 
 
     def _toggle_setting(self, parent, label, subtitle, setting_key, external=False):
-        """Builds a toggle switch for a boolean setting."""
+        """Builds a toggle switch for a boolean setting stored in the database."""
         row = tk.Frame(parent, bg=self.theme.bg_secondary)
         row.pack(fill='x', pady=4)
 
@@ -318,8 +359,8 @@ class ReportsTab:
         tk.Label(lbl_row, text=label,
                  font=self.theme.font(size=FONT_SIZE_SM),
                  bg=self.theme.bg_secondary,
-                 fg=self.theme.text_primary).pack(side='left')
-        if external:
+                 fg=self.theme.text_primary).pack(side='left')          # Setting label
+        if external:                                                    # Show warning badge for opt-in features
             tk.Label(lbl_row, text=" ⚠ external",
                      font=self.theme.font(size=FONT_SIZE_XS),
                      bg=BG_WARNING, fg=COLOR_WARNING,
@@ -328,15 +369,15 @@ class ReportsTab:
         tk.Label(left, text=subtitle,
                  font=self.theme.font(size=FONT_SIZE_XS),
                  bg=self.theme.bg_secondary,
-                 fg=self.theme.text_muted).pack(anchor='w')
+                 fg=self.theme.text_muted).pack(anchor='w')             # Subtitle below label
 
-        # Toggle button
-        current = self.db.get_setting(setting_key, 'false') == 'true'
-        var = tk.BooleanVar(value=current)
+        current = self.db.get_setting(setting_key, 'false') == 'true'  # Read current value from database
+        var = tk.BooleanVar(value=current)                              # Bind to checkbox
 
         def on_toggle():
+            """Saves the new toggle value to the database and updates the button appearance."""
             new_val = var.get()
-            self.db.set_setting(setting_key, 'true' if new_val else 'false')
+            self.db.set_setting(setting_key, 'true' if new_val else 'false')  # Persist to database
             btn.configure(
                 text="ON" if new_val else "OFF",
                 bg=COLOR_SAFE if new_val else self.theme.bg_tertiary,
@@ -353,7 +394,7 @@ class ReportsTab:
             indicatoron=False, cursor="hand2")
         btn.pack(side='right')
 
-        tk.Frame(parent, bg=self.theme.border_light, height=1).pack(fill='x')
+        tk.Frame(parent, bg=self.theme.border_light, height=1).pack(fill='x')  # Divider
 
 
     # =================================================================
@@ -372,28 +413,24 @@ class ReportsTab:
 
     def _export_html(self, dark=True):
         """Generates and saves an HTML security report."""
-        # Ask user where to save
-        filename = filedialog.asksaveasfilename(
+        filename = filedialog.asksaveasfilename(        # Ask user where to save the file
             defaultextension=".html",
             filetypes=[("HTML files", "*.html"), ("All files", "*.*")],
             initialfile=f"sentinelhome101_report_{datetime.date.today()}.html",
             title="Save HTML Report"
         )
-        if not filename:
+        if not filename:                                # User cancelled the dialog
             return
 
         try:
-            html = self._generate_html_report(dark=dark)
+            html = self._generate_html_report(dark=dark)    # Generate report content
             with open(filename, 'w', encoding='utf-8') as f:
-                f.write(html)
+                f.write(html)                               # Write to disk
 
-            # Save to report history
-            self.db.set_setting(
-                f'report_{datetime.date.today()}', filename)
-            self._refresh_report_history()
+            self.db.set_setting(f'report_{datetime.date.today()}', filename)  # Save to history
+            self._refresh_report_history()                  # Update history panel
 
-            # Offer to open in browser
-            if messagebox.askyesno(
+            if messagebox.askyesno(                         # Offer to open in browser
                 "Report Saved",
                 f"Report saved to:\n{filename}\n\nOpen in browser now?",
                 parent=self.parent
@@ -409,7 +446,8 @@ class ReportsTab:
 
 
     def _generate_html_report(self, dark=True):
-        """Generates the full HTML report content."""
+        """Generates the full HTML report content as a string."""
+        # Color palette based on dark or light mode
         bg = "#0d1117" if dark else "#ffffff"
         text = "#e6edf3" if dark else "#0d1117"
         secondary = "#161b22" if dark else "#f8fafc"
@@ -417,18 +455,18 @@ class ReportsTab:
         muted = "#8b949e" if dark else "#64748b"
         accent = "#f1f5f9"
 
-        last = self.db.get_last_scan()
+        last = self.db.get_last_scan()          # Most recent scan record
         findings = []
-        devices = self.db.get_all_devices()
+        devices = self.db.get_all_devices()     # All discovered network devices
 
         if last:
-            findings = self.db.get_findings_for_scan(last['id'])
+            findings = self.db.get_findings_for_scan(last['id'])  # Findings for last scan
 
         network_name = self.db.get_setting('network_name', 'Home Network')
         score = last.get('score', '—') if last else '—'
         scan_date = last.get('scan_date', '?')[:10] if last else '—'
 
-        # Build findings HTML
+        # Build findings HTML section
         findings_html = ""
         if findings:
             for f in findings:
@@ -454,9 +492,9 @@ class ReportsTab:
         else:
             findings_html = f'<p style="color:{muted}">No findings recorded. Run a scan first.</p>'
 
-        # Build devices HTML
+        # Build devices table HTML section
         devices_html = ""
-        for d in devices[:20]:
+        for d in devices[:20]:                  # Limit to 20 devices in report
             devices_html += f"""
             <tr>
               <td style="font-family:monospace">{d.get('ip_address','?')}</td>
@@ -641,17 +679,17 @@ class ReportsTab:
 
 
     def _refresh_report_history(self):
-        """Shows recently saved report files."""
+        """Shows recently saved report files in the history panel."""
         for w in self.history_frame.winfo_children():
-            w.destroy()
+            w.destroy()                             # Clear existing entries
 
-        reports_dir = self.db.app_data_dir
+        reports_dir = self.db.app_data_dir          # Reports saved in AppData folder
         try:
             report_files = [
                 f for f in os.listdir(reports_dir)
                 if f.endswith('.html') or f.endswith('.txt')
             ]
-            report_files.sort(reverse=True)
+            report_files.sort(reverse=True)         # Most recent first
         except Exception:
             report_files = []
 
@@ -663,10 +701,10 @@ class ReportsTab:
                      fg=self.theme.text_muted).pack(anchor='w', pady=8)
             return
 
-        for fname in report_files[:5]:
+        for fname in report_files[:5]:              # Show up to 5 most recent reports
             row = tk.Frame(self.history_frame, bg=self.theme.bg_secondary)
             row.pack(fill='x', pady=1)
-            tk.Label(row, text=fname[:40],
+            tk.Label(row, text=fname[:40],          # Truncate long filenames
                      font=self.theme.font(size=FONT_SIZE_SM, mono=True),
                      bg=self.theme.bg_secondary,
                      fg=self.theme.text_primary).pack(
@@ -689,8 +727,8 @@ class ReportsTab:
     # =================================================================
 
     def _toggle_theme(self):
-        """Toggles dark/light mode."""
-        self.toggle_theme_callback()
+        """Toggles dark/light mode and updates the button appearance."""
+        self.toggle_theme_callback()                # Call the app-level theme toggle
         is_dark = self.theme.is_dark
         self.theme_btn.configure(
             text="ON" if is_dark else "OFF",
@@ -705,7 +743,7 @@ class ReportsTab:
         dialog.configure(bg=self.theme.bg_primary)
         dialog.resizable(False, False)
         dialog.geometry("360x140")
-        dialog.grab_set()
+        dialog.grab_set()                           # Block main window while dialog is open
 
         tk.Label(dialog, text="Network name:",
                  font=self.theme.font(size=FONT_SIZE_SM),
@@ -720,10 +758,10 @@ class ReportsTab:
                          insertbackground=self.theme.text_primary,
                          relief='flat')
         entry.pack(fill='x', padx=20, pady=4)
-        entry.focus_set()
+        entry.focus_set()                           # Put cursor in field immediately
 
         def save():
-            self.db.set_setting('network_name', var.get())
+            self.db.set_setting('network_name', var.get())  # Persist to database
             dialog.destroy()
 
         tk.Button(dialog, text="Save",
@@ -732,7 +770,80 @@ class ReportsTab:
                   relief='flat', padx=16, pady=4,
                   cursor="hand2", command=save).pack(pady=12)
 
-        dialog.bind('<Return>', lambda e: save())
+        dialog.bind('<Return>', lambda e: save())   # Enter key triggers save
+
+
+    def _edit_hibp_key(self):
+        """
+        Opens a dialog for the user to enter or update their HIBP API key.
+
+        The key is stored locally in the database only.
+        It is never transmitted anywhere — it is only used as a header
+        in requests the user explicitly initiates from the Threat tab.
+        Get a free key at: haveibeenpwned.com/API/Key
+        """
+        dialog = tk.Toplevel(self.parent)           # Create a new popup window
+        dialog.title("HIBP API Key")                # Window title bar text
+        dialog.configure(bg=self.theme.bg_primary)  # Match app background color
+        dialog.resizable(False, False)              # Fixed size — no resize handles
+        dialog.geometry("420x180")                  # Width x height in pixels
+        dialog.grab_set()                           # Block main window while dialog is open
+
+        tk.Label(                                   # Instruction label at top of dialog
+            dialog,
+            text="Enter your HaveIBeenPwned API key:",   # User-facing instruction
+            font=self.theme.font(size=FONT_SIZE_SM),     # Standard small font
+            bg=self.theme.bg_primary,                    # Match dialog background
+            fg=self.theme.text_primary                   # Primary text color
+        ).pack(padx=20, pady=(20, 4), anchor='w')        # Left-aligned with padding
+
+        tk.Label(                                   # Helper text showing where to get a key
+            dialog,
+            text="Get a free key at: haveibeenpwned.com/API/Key",  # Where to get the key
+            font=self.theme.font(size=FONT_SIZE_XS),               # Smaller font for helper text
+            bg=self.theme.bg_primary,                              # Match dialog background
+            fg=self.theme.text_muted                               # Muted color for secondary info
+        ).pack(padx=20, pady=(0, 8), anchor='w')    # Left-aligned below instruction
+
+        var = tk.StringVar(                         # String variable bound to the entry field
+            value=self.db.get_setting('hibp_api_key', '')  # Pre-fill with current saved key
+        )
+
+        entry = tk.Entry(                           # Text entry field for the API key
+            dialog,
+            textvariable=var,                       # Bound to the string variable above
+            font=self.theme.font(size=FONT_SIZE_SM, mono=True),  # Monospace for key readability
+            bg=self.theme.bg_tertiary,              # Slightly lighter background for input field
+            fg=self.theme.text_primary,             # Primary text color
+            insertbackground=self.theme.text_primary,   # Cursor color matches text
+            relief='flat',                          # No border style
+            width=40                                # Wide enough for a typical HIBP key
+        )
+        entry.pack(fill='x', padx=20, pady=4)      # Full width with side padding
+        entry.focus_set()                           # Put cursor in field immediately on open
+
+        def save():
+            """Saves the API key to the database and updates the status label."""
+            key = var.get().strip()                         # Get trimmed key value
+            self.db.set_setting('hibp_api_key', key)        # Save to database
+            status = "Set" if key else "Not set"            # Determine new status text
+            color = COLOR_SAFE if key else self.theme.text_muted   # Green if set, muted if not
+            self.hibp_key_status.configure(text=status, fg=color)  # Update status label in settings
+            dialog.destroy()                                # Close the dialog
+
+        tk.Button(                                  # Save button
+            dialog,
+            text="Save",                            # Button label
+            font=self.theme.font(size=FONT_SIZE_SM, bold=True),  # Bold small font
+            bg=self.theme.accent,                   # Accent color for primary action
+            fg=self.theme.bg_primary,               # Dark text on accent background
+            relief='flat',                          # No border
+            padx=16, pady=4,                        # Internal padding
+            cursor="hand2",                         # Hand cursor on hover
+            command=save                            # Call save function on click
+        ).pack(pady=12)                             # Vertical padding below entry field
+
+        dialog.bind('<Return>', lambda e: save())   # Enter key triggers save
 
 
     def _change_scan_profile(self):
@@ -742,7 +853,7 @@ class ReportsTab:
         dialog.configure(bg=self.theme.bg_primary)
         dialog.resizable(False, False)
         dialog.geometry("360x200")
-        dialog.grab_set()
+        dialog.grab_set()                           # Block main window while dialog is open
 
         tk.Label(dialog, text="Default scan profile:",
                  font=self.theme.font(size=FONT_SIZE_SM),
@@ -751,7 +862,7 @@ class ReportsTab:
 
         var = tk.StringVar(value=self.db.get_setting('scan_profile', 'quick'))
 
-        for key, info in SCAN_PROFILES.items():
+        for key, info in SCAN_PROFILES.items():     # One radio button per scan profile
             tk.Radiobutton(
                 dialog, text=f"{info['label']} — {info['duration']}",
                 variable=var, value=key,
@@ -762,7 +873,7 @@ class ReportsTab:
             ).pack(anchor='w', padx=20, pady=2)
 
         def save():
-            self.db.set_setting('scan_profile', var.get())
+            self.db.set_setting('scan_profile', var.get())  # Persist selection to database
             dialog.destroy()
 
         tk.Button(dialog, text="Save",
@@ -773,13 +884,13 @@ class ReportsTab:
 
 
     def update(self, scan_results):
-        """Called after a scan to refresh report history."""
-        self.last_scan_results = scan_results
-        self._refresh_report_history()
+        """Called after a scan completes to refresh the report history panel."""
+        self.last_scan_results = scan_results   # Store for potential export use
+        self._refresh_report_history()          # Refresh report list in case new report was saved
 
 
     def _panel(self, parent, title):
-        """Creates a standard panel."""
+        """Creates a standard titled panel container used throughout this tab."""
         outer = tk.Frame(parent, bg=self.theme.bg_secondary)
         outer.pack(fill='x', pady=(0, 8))
         tk.Label(outer, text=title,
@@ -787,10 +898,11 @@ class ReportsTab:
                  bg=self.theme.bg_secondary,
                  fg=self.theme.text_muted).pack(
             anchor='w', padx=PADDING_MD, pady=(PADDING_MD, 4))
-        tk.Frame(outer, bg=self.theme.border, height=1).pack(fill='x')
+        tk.Frame(outer, bg=self.theme.border, height=1).pack(fill='x')  # Divider under panel title
         return outer
 
 
     def _apply_theme(self):
-        self.canvas.configure(bg=self.theme.bg_primary)
-        self.inner.configure(bg=self.theme.bg_primary)
+        """Called by theme manager when the user switches dark/light mode."""
+        self.canvas.configure(bg=self.theme.bg_primary)    # Update canvas background
+        self.inner.configure(bg=self.theme.bg_primary)     # Update inner frame background
