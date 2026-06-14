@@ -69,8 +69,13 @@ class MonitoringTab:
         self.inner.bind('<Configure>', lambda e: canvas.configure(
             scrollregion=canvas.bbox('all')))
         canvas.bind('<Configure>', lambda e: canvas.itemconfig(win, width=e.width))
-        canvas.bind_all('<MouseWheel>', lambda e: canvas.yview_scroll(
-            int(-1 * (e.delta / 120)), 'units'))
+        canvas.bind('<Map>', lambda e: canvas.bind_all(
+            '<MouseWheel>', lambda e: canvas.yview_scroll(
+                int(-1 * (e.delta / 120)), 'units')))
+        canvas.bind('<Enter>', lambda e: canvas.bind_all(
+            '<MouseWheel>', lambda e: canvas.yview_scroll(
+                int(-1 * (e.delta / 120)), 'units')))
+        canvas.bind('<Leave>', lambda e: canvas.unbind_all('<MouseWheel>'))
 
         # Two column layout
         cols = tk.Frame(self.inner, bg=self.theme.bg_primary)

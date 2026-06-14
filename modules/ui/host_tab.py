@@ -93,8 +93,13 @@ class HostTab:
             scrollregion=self.canvas.bbox('all')))
         self.canvas.bind('<Configure>', lambda e: self.canvas.itemconfig(
             self.win_id, width=e.width))
-        self.canvas.bind_all('<MouseWheel>', lambda e: self.canvas.yview_scroll(
-            int(-1 * (e.delta / 120)), 'units'))
+        self.canvas.bind('<Map>', lambda e: self.canvas.bind_all(
+            '<MouseWheel>', lambda e: self.canvas.yview_scroll(
+                int(-1 * (e.delta / 120)), 'units')))
+        self.canvas.bind('<Enter>', lambda e: self.canvas.bind_all(
+            '<MouseWheel>', lambda e: self.canvas.yview_scroll(
+                int(-1 * (e.delta / 120)), 'units')))
+        self.canvas.bind('<Leave>', lambda e: self.canvas.unbind_all('<MouseWheel>'))
 
         # --- Header ---
         self._build_header()

@@ -53,8 +53,13 @@ class ReportsTab:
             scrollregion=self.canvas.bbox('all')))              # Update scroll region when content changes
         self.canvas.bind('<Configure>', lambda e: self.canvas.itemconfig(
             self.win_id, width=e.width))                        # Stretch inner frame to canvas width
-        self.canvas.bind_all('<MouseWheel>', lambda e: self.canvas.yview_scroll(
-            int(-1 * (e.delta / 120)), 'units'))                # Enable mouse wheel scrolling
+        self.canvas.bind('<Map>', lambda e: self.canvas.bind_all(
+            '<MouseWheel>', lambda e: self.canvas.yview_scroll(
+                int(-1 * (e.delta / 120)), 'units')))
+        self.canvas.bind('<Enter>', lambda e: self.canvas.bind_all(
+            '<MouseWheel>', lambda e: self.canvas.yview_scroll(
+                int(-1 * (e.delta / 120)), 'units')))
+        self.canvas.bind('<Leave>', lambda e: self.canvas.unbind_all('<MouseWheel>'))                # Enable mouse wheel scrolling
 
         # Header row with tab title
         hdr = tk.Frame(self.inner, bg=self.theme.bg_primary)

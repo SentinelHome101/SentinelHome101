@@ -95,7 +95,9 @@ class DashboardTab:
         self.canvas.bind('<Configure>', self._on_canvas_configure)
 
         # Mouse wheel scrolling
-        self.canvas.bind_all('<MouseWheel>', self._on_mousewheel)
+        self.canvas.bind('<Map>', lambda e: self.canvas.bind_all('<MouseWheel>', self._on_mousewheel))
+        self.canvas.bind('<Enter>', lambda e: self.canvas.bind_all('<MouseWheel>', self._on_mousewheel))
+        self.canvas.bind('<Leave>', lambda e: self.canvas.unbind_all('<MouseWheel>'))
 
         # Build all sections with padding
         pad = PADDING_LG
