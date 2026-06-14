@@ -1,18 +1,27 @@
 SentinelHome101 — Changelog
 
 
-SentinelHome101 — Changelog
+Version 1.0.1  ·  June 14, 2026
+Feature and bug fix update.
 
-Version 1.0.1  ·  June 13, 2026
-Code signing release.
+Settings
+- HIBP API key field added to Reports & Settings tab
+- Users can now save their HaveIBeenPwned API key directly in the app
+- Key is stored locally and never transmitted outside the machine
+- Get a free key at: haveibeenpwned.com/API/Key
+
+Bug Fixes
+- Mouse wheel scrolling now works reliably on all tabs after a scan
+  completes
 
 Security
-- Executable now signed with a verified Microsoft Artifact Signing
-  certificate issued to Michael Hannebaum
+- Executable signed with a verified Microsoft Artifact Signing
+  certificate
 - Signature is permanently timestamped — valid beyond certificate
   expiry
 - Windows UAC prompt now displays verified publisher name instead
   of Unknown Publisher
+- VirusTotal scan result: 71 of 71 engines clean on signed build
 
 Application
 - Version number updated to 1.0.1 across all components
@@ -22,8 +31,7 @@ Website
 - Blog section added to main navigation and footer
 - Version references updated site-wide
 
-Known Limitations Carried Forward from 1.0.0
-- Sidebar tooltip may occasionally persist briefly after mouse leave
+Known Limitations
 - HaveIBeenPwned email check requires a free API key from
   haveibeenpwned.com
 - Router firmware version detection depends on router exposing
@@ -49,7 +57,7 @@ Endpoint Security (15 checks)
 - Audit log retention checker
 - Screensaver / auto-lock policy checker
 - Windows pagefile security checker
- 
+
 Network Perimeter (15 checks)
 - Windows Firewall status across all profiles
 - WiFi security protocol checker (WPA3/WPA2/WPA/WEP/Open)
@@ -66,7 +74,7 @@ Network Perimeter (15 checks)
 - UPnP/SSDP detection
 - Guest network detection
 - mDNS/Bonjour exposure check
- 
+
 Threat Detection (11 checks)
 - Botnet / compromised device behavior detector
 - ARP spoofing / poisoning detector
@@ -79,7 +87,7 @@ Threat Detection (11 checks)
 - Wake-on-LAN status check
 - IPv6 readiness check
 - Open file share detection
- 
+
 Device and Network Exposure
 - Full network device discovery via ping sweep
 - MAC address manufacturer identification (local IEEE OUI database)
@@ -87,46 +95,44 @@ Device and Network Exposure
 - Per-device risk scoring
 - Device first seen / last seen tracking
 - Device nickname and trust status
- 
+
 Monitoring and History
 - Scan history with full result storage
 - Change detection between scans
 - Inactive device tracker (30-day threshold)
 - Network performance metrics (latency, packet loss, DNS response)
 - Scheduled scan reminder
- 
+
 Reporting
 - 0-100 network score with per-finding penalty model
 - HTML report export (dark and light themes)
 - Plain text report export
 - CSV device data export
 - One-click remediation guidance for every finding
- 
+
 Application
 - Dark and light mode
 - Window size and position memory
 - First-run disclosure screen
 - Collapsible help and glossary (10 topics)
 - All scanning runs locally — no cloud, no telemetry
- 
+
 KNOWN LIMITATIONS IN 1.0.0
 - Sidebar tooltip may occasionally persist briefly after mouse leave
-- HaveIBeenPwned email check requires a free API key from 
-haveibeenpwned.com
-- Router firmware version detection depends on router exposing 
-version in HTTP headers
- 
+- HaveIBeenPwned email check requires a free API key from
+  haveibeenpwned.com
+- Router firmware version detection depends on router exposing
+  version in HTTP headers
+
 PLANNED FOR 1.1.0
 - Windows system tray icon with scan status indicator
 - Automated weekly scan scheduler
 - Email alert on critical finding detection
 - Visual network topology map
 - Bluetooth device scanner
- 
-───────────────────────────────────────────────
-─────────────
+
+───────────────────────────────────────────────────────────────
 Support: support@sentinelhome101.com
 Website: sentinelhome101.com
 GitHub: github.com/SentinelHome101/SentinelHome101
-─────────────────────────────────────────────────────────────
-
+───────────────────────────────────────────────────────────────
