@@ -4,7 +4,7 @@
   <!-- Homepage -->
   <url>
     <loc>https://sentinelhome101.com/index.html</loc>
-    <lastmod>2026-05-29</lastmod>
+    <lastmod>2026-06-13</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
@@ -15,6 +15,14 @@
     <lastmod>2026-05-29</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
+  </url>
+
+  <!-- FAQ Page -->
+  <url>
+    <loc>https://sentinelhome101.com/faq.html</loc>
+    <lastmod>2026-06-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
   </url>
 
   <!-- Blog Index -->

@@ -1,7 +1,7 @@
 """
 =============================================================
   SENTINELHOME101 — Main Entry Point
-  Version: 1.0.0
+  Version: 1.0.1
   Description: 101-point home network and computer security
                audit tool for Windows home users.
 

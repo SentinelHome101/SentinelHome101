@@ -1,0 +1,132 @@
+SentinelHome101 — Changelog
+
+
+SentinelHome101 — Changelog
+
+Version 1.0.1  ·  June 13, 2026
+Code signing release.
+
+Security
+- Executable now signed with a verified Microsoft Artifact Signing
+  certificate issued to Michael Hannebaum
+- Signature is permanently timestamped — valid beyond certificate
+  expiry
+- Windows UAC prompt now displays verified publisher name instead
+  of Unknown Publisher
+
+Application
+- Version number updated to 1.0.1 across all components
+
+Website
+- Standalone FAQ page added at sentinelhome101.com/faq.html
+- Blog section added to main navigation and footer
+- Version references updated site-wide
+
+Known Limitations Carried Forward from 1.0.0
+- Sidebar tooltip may occasionally persist briefly after mouse leave
+- HaveIBeenPwned email check requires a free API key from
+  haveibeenpwned.com
+- Router firmware version detection depends on router exposing
+  version in HTTP headers
+
+───────────────────────────────────────────────────────────────
+
+Version 1.0.0  ·  May 19, 2026
+Initial release.
+Endpoint Security (15 checks)
+- Antivirus / endpoint protection status
+- Windows Defender exclusions auditor
+- Windows Event Log tampering detector
+- OS patch level checker
+- Backup status and 3-2-1 rule checker
+- Ransomware canary file monitor
+- BitLocker encryption checker
+- BIOS / Secure Boot checker
+- Local user account auditor
+- Windows Credential Manager audit
+- Macro and script execution policy checker
+- Windows Remote Registry service checker
+- Audit log retention checker
+- Screensaver / auto-lock policy checker
+- Windows pagefile security checker
+ 
+Network Perimeter (15 checks)
+- Windows Firewall status across all profiles
+- WiFi security protocol checker (WPA3/WPA2/WPA/WEP/Open)
+- WiFi password entropy checker
+- WPS status checker
+- Router default credential detector
+- Router firmware version checker
+- DNS server checker and hijacking detector
+- DNS over HTTPS (DoH) status checker
+- HTTPS downgrade attack detector
+- TLS version checker
+- NTP time sync checker
+- Network clock drift detector
+- UPnP/SSDP detection
+- Guest network detection
+- mDNS/Bonjour exposure check
+ 
+Threat Detection (11 checks)
+- Botnet / compromised device behavior detector
+- ARP spoofing / poisoning detector
+- Rogue DHCP server detector
+- Network interface promiscuous mode detector
+- Ransomware canary file monitor (active)
+- Network traffic anomaly baseline
+- Credential exposure check via HaveIBeenPwned (opt-in)
+- Windows Security event log viewer
+- Wake-on-LAN status check
+- IPv6 readiness check
+- Open file share detection
+ 
+Device and Network Exposure
+- Full network device discovery via ping sweep
+- MAC address manufacturer identification (local IEEE OUI database)
+- Port scanning with service banner detection
+- Per-device risk scoring
+- Device first seen / last seen tracking
+- Device nickname and trust status
+ 
+Monitoring and History
+- Scan history with full result storage
+- Change detection between scans
+- Inactive device tracker (30-day threshold)
+- Network performance metrics (latency, packet loss, DNS response)
+- Scheduled scan reminder
+ 
+Reporting
+- 0-100 network score with per-finding penalty model
+- HTML report export (dark and light themes)
+- Plain text report export
+- CSV device data export
+- One-click remediation guidance for every finding
+ 
+Application
+- Dark and light mode
+- Window size and position memory
+- First-run disclosure screen
+- Collapsible help and glossary (10 topics)
+- All scanning runs locally — no cloud, no telemetry
+ 
+KNOWN LIMITATIONS IN 1.0.0
+- Sidebar tooltip may occasionally persist briefly after mouse leave
+- HaveIBeenPwned email check requires a free API key from 
+haveibeenpwned.com
+- Router firmware version detection depends on router exposing 
+version in HTTP headers
+ 
+PLANNED FOR 1.1.0
+- Windows system tray icon with scan status indicator
+- Automated weekly scan scheduler
+- Email alert on critical finding detection
+- Visual network topology map
+- Bluetooth device scanner
+ 
+───────────────────────────────────────────────
+─────────────
+Support: support@sentinelhome101.com
+Website: sentinelhome101.com
+GitHub: github.com/SentinelHome101/SentinelHome101
+─────────────────────────────────────────────────────────────
+

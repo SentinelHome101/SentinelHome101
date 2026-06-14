@@ -16,7 +16,7 @@
 # =============================================================
 
 APP_NAME        = "SentinelHome101"         # Full product name
-APP_VERSION     = "1.0.0"                   # Current version number
+APP_VERSION     = "1.0.1"                   # Current version number
 APP_SUPPORT     = "support@sentinelhome101.com"  # Support email address
 APP_DESCRIPTION = "101-point home network and computer security audit"
 

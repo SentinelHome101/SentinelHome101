@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<!-- Sets character encoding to UTF-8 so all text renders correctly -->
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- Makes the page scale correctly on mobile devices -->
+
+<title>FAQ — SentinelHome101</title>
+<!-- Page title shown in browser tab and search results -->
+
+<meta name="description" content="Answers to common questions about SentinelHome101 — the free 101-point home network security audit for Windows.">
+<!-- Description shown in Google search results below the page title -->
+
+<link rel="canonical" href="https://sentinelhome101.com/faq.html">
+<!-- Tells search engines this is the authoritative URL for this page -->
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<!-- Opens early connection to Google Fonts to speed up font loading -->
+
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<!-- Loads the same three fonts used across the rest of the site -->
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-QZW9CE6R88"></script>
+<!-- Loads Google Analytics asynchronously so it does not slow page load -->
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-QZW9CE6R88');
+  /* Initializes Google Analytics with the site's measurement ID */
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Do I need to install Python or any other software?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. SentinelHome101.exe is completely self-contained. It includes everything it needs to run. Just double-click it — no Python, no extra downloads, no setup wizard."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Why does Windows Defender flag it sometimes?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "SentinelHome101 is packaged using a tool called PyInstaller, which bundles Python applications into a single executable file. Some antivirus engines flag PyInstaller-packaged files as suspicious based on the packaging pattern alone, not because of anything the app actually does. Microsoft Defender, Kaspersky, and Bitdefender all return clean results. 67 of 71 engines on VirusTotal cleared it. The 4 flags are heuristic detections, not identifications of actual malicious code."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is my data being sent anywhere?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. All 101 checks run entirely on your local machine and network. No scan results, device information, IP addresses, or personal data are sent to any server. Two features optionally connect to external services — internet speed test and credential breach check — both are disabled by default and require explicit opt-in. All data is stored locally on your machine at C:\\Users\\[YourName]\\AppData\\Roaming\\SentinelHome101\\. It never leaves your machine."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Why does it ask for Administrator permission every time?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Several of the 101 security checks require Windows Administrator access — for example, reading Windows Security Center status, querying system information, and running network configuration commands. The UAC prompt appears every time as a result. This is intentional for a security tool."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What does the network score mean?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "SentinelHome101 starts every scan at 100 and deducts points for security findings. Each critical finding costs 15 points. Each warning costs 5 points. A score above 80 is good. A score between 50 and 79 is fair. A score below 50 means significant issues were found that need prompt attention."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "The app found an unknown device on my network. What should I do?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "First try to identify it — check your router's connected devices list. Common unknown devices include smart TVs, streaming boxes, smart speakers, and printers. If you cannot identify a device after investigation, change your WiFi password. Any device connected without your knowledge will be disconnected when the password changes."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Does SentinelHome101 fix problems automatically?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. SentinelHome101 is an audit and reporting tool — it finds problems and tells you how to fix them in plain English. It does not make changes to your system or network automatically. You remain in control of every change that is made."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "I got a perfect score. Does that mean I am completely secure?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No tool can guarantee complete security, and SentinelHome101 is no exception. A perfect score means none of the 101 checks found a known issue at the time of the scan. It does not account for threats that emerge after the scan runs, vulnerabilities in software you have installed, or human factors like weak passwords or phishing. Think of it as a strong baseline, not a final verdict."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is a default router credential and why does it matter?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Every router ships from the factory with a default username and password — usually something like admin/admin or admin/password. If you have never changed yours, anyone who can reach your router can log into it and take control of your network. SentinelHome101 checks whether your router is still using known default credentials as part of its 101-point audit."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What does it mean if my DNS has been changed?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "DNS is the system that translates website names into IP addresses. If your DNS settings have been changed without your knowledge, someone may be redirecting your traffic — sending you to fake versions of real websites to steal your login credentials. This is called DNS hijacking and it is one of the harder attacks to detect without a dedicated tool."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is UPnP and should I disable it?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "UPnP stands for Universal Plug and Play. It is a feature that allows devices on your network to automatically open ports on your router without asking for permission. That convenience comes with real security risk — malicious software can use UPnP to punch holes in your firewall without you knowing."
+      }
+    }
+  ]
+}
+</script>
+<!-- FAQ schema markup — tells Google this is a FAQ page and enables rich results in search -->
+
+<style>
+/* ─── RESET & BASE ─────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+/* Resets default browser spacing and sizing behavior on all elements */
+
+:root {
+  --bg:         #0a0d12;
+  --bg-2:       #0f1318;
+  --bg-3:       #151a22;
+  --border:     #1e2530;
+  --border-2:   #252d3a;
+  --ghost:      #f1f5f9;
+  --ghost-dim:  #94a3b8;
+  --ghost-mute: #334155;
+  --critical:   #f87171;
+  --warning:    #fbbf24;
+  --safe:       #4ade80;
+  --accent:     #f1f5f9;
+  --serif:      'DM Serif Display', Georgia, serif;
+  --mono:       'DM Mono', 'Courier New', monospace;
+  --sans:       'DM Sans', system-ui, sans-serif;
+}
+/* Defines all color and font variables used throughout the page — matches index.html exactly */
+
+html { scroll-behavior: smooth; }
+/* Makes anchor link jumps animate smoothly instead of snapping */
+
+body {
+  background: var(--bg);
+  color: var(--ghost);
+  font-family: var(--sans);
+  font-weight: 300;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+/* Sets base background color, text color, font, and prevents horizontal scrollbar */
+
+/* ─── NOISE TEXTURE OVERLAY ───────────────────────────────── */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.4;
+}
+/* Adds the same subtle grain texture overlay used on the main site */
+
+/* ─── NAV ──────────────────────────────────────────────────── */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 48px;
+  height: 64px;
+  background: rgba(10, 13, 18, 0.85);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+}
+/* Fixed navigation bar that stays at the top while scrolling */
+
+.nav-logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+}
+/* Logo container — flexbox aligns the shield icon and site name side by side */
+
+.nav-shield { width: 32px; height: 36px; flex-shrink: 0; }
+/* Sets the shield SVG icon size and prevents it from shrinking */
+
+.nav-name {
+  font-family: var(--serif);
+  font-size: 18px;
+  color: var(--ghost);
+  letter-spacing: -0.01em;
+}
+/* Styles the SentinelHome101 text in the nav using the serif font */
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  list-style: none;
+}
+/* Horizontal nav link list with even spacing between items */
+
+.nav-links a {
+  color: var(--ghost-dim);
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  transition: color 0.2s;
+}
+/* Styles each nav link — uppercase, dimmed color, smooth hover transition */
+
+.nav-links a:hover { color: var(--ghost); }
+/* Brightens nav link text on hover */
+
+.nav-cta {
+  background: var(--ghost) !important;
+  color: var(--bg) !important;
+  padding: 8px 20px !important;
+  border-radius: 4px !important;
+  font-weight: 500 !important;
+  transition: opacity 0.2s !important;
+}
+/* Styles the Download button in the nav as a filled white pill */
+
+.nav-cta:hover { opacity: 0.88 !important; }
+/* Slightly fades the Download button on hover */
+
+/* ─── PAGE HEADER ──────────────────────────────────────────── */
+.page-header {
+  padding: 140px 0 80px;
+  border-bottom: 1px solid var(--border);
+  position: relative;
+  z-index: 1;
+}
+/* Top section of the page — extra top padding accounts for the fixed nav bar */
+
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 48px;
+}
+/* Centers content and constrains max width — matches index.html container */
+
+.section-label {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--ghost-mute);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+}
+/* Small uppercase monospace label above section headings */
+
+.section-title {
+  font-family: var(--serif);
+  font-size: clamp(32px, 4vw, 52px);
+  font-weight: 400;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: var(--ghost);
+  margin-bottom: 16px;
+}
+/* Large serif heading — scales with viewport width using clamp */
+
+.section-sub {
+  font-size: 16px;
+  color: var(--ghost-dim);
+  max-width: 560px;
+  font-weight: 300;
+  line-height: 1.6;
+}
+/* Subtitle text beneath the main heading */
+
+/* ─── FAQ SECTION ──────────────────────────────────────────── */
+.faq-section {
+  padding: 80px 0 120px;
+  position: relative;
+  z-index: 1;
+}
+/* Main FAQ content area with top and bottom breathing room */
+
+.faq-list {
+  margin-top: 48px;
+  max-width: 720px;
+}
+/* Constrains FAQ list width for comfortable reading — matches index.html FAQ width */
+
+.faq-item {
+  border-bottom: 1px solid var(--border);
+}
+/* Each question row has a bottom border as a divider */
+
+.faq-q {
+  width: 100%;
+  background: none;
+  border: none;
+  color: var(--ghost);
+  font-family: var(--sans);
+  font-size: 15px;
+  font-weight: 400;
+  text-align: left;
+  padding: 20px 0;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  transition: color 0.2s;
+}
+/* Styles each question button — full width, no default button appearance */
+
+.faq-q:hover { color: var(--ghost-dim); }
+/* Dims question text slightly on hover to indicate interactivity */
+
+.faq-icon {
+  font-size: 20px;
+  color: var(--ghost-mute);
+  flex-shrink: 0;
+  transition: transform 0.2s;
+  font-weight: 300;
+}
+/* The plus/times icon on the right side of each question */
+
+.faq-q.open .faq-icon { transform: rotate(45deg); }
+/* Rotates the plus icon 45 degrees to form an X when the answer is open */
+
+.faq-a {
+  font-size: 14px;
+  color: var(--ghost-dim);
+  line-height: 1.7;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease, padding 0.3s ease;
+  padding: 0;
+}
+/* Answer text — hidden by default using max-height: 0, animates open on click */
+
+.faq-a.open {
+  max-height: 300px;
+  padding-bottom: 20px;
+}
+/* Expands the answer area when the open class is applied — increased to 300px to handle longer answers */
+
+.faq-a a {
+  color: var(--ghost-dim);
+  text-decoration: underline;
+  transition: color 0.2s;
+}
+/* Styles inline links inside answers */
+
+.faq-a a:hover { color: var(--ghost); }
+/* Brightens inline links on hover */
+
+/* ─── CTA STRIP ────────────────────────────────────────────── */
+.cta-strip {
+  border-top: 1px solid var(--border);
+  background: var(--bg-2);
+  padding: 64px 48px;
+  text-align: center;
+  position: relative;
+  z-index: 1;
+}
+/* Bottom call to action section with slightly lighter background */
+
+.cta-strip h2 {
+  font-family: var(--serif);
+  font-size: clamp(24px, 3vw, 36px);
+  font-weight: 400;
+  color: var(--ghost);
+  margin-bottom: 12px;
+}
+/* CTA heading in serif font */
+
+.cta-strip p {
+  font-size: 15px;
+  color: var(--ghost-dim);
+  margin-bottom: 32px;
+  font-weight: 300;
+}
+/* CTA supporting text */
+
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--ghost);
+  color: var(--bg);
+  text-decoration: none;
+  padding: 14px 32px;
+  border-radius: 4px;
+  font-size: 15px;
+  font-weight: 500;
+  font-family: var(--sans);
+  transition: opacity 0.2s, transform 0.2s;
+}
+/* Primary download button — white filled, matches index.html button style */
+
+.btn-primary:hover { opacity: 0.88; transform: translateY(-1px); }
+/* Fades and lifts button slightly on hover */
+
+/* ─── FOOTER ───────────────────────────────────────────────── */
+footer {
+  border-top: 1px solid var(--border);
+  padding: 40px 48px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+/* Footer row — space between left info block and right link row */
+
+.footer-left {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--ghost-mute);
+  line-height: 1.8;
+}
+/* Left footer block with version number and support email */
+
+.footer-right {
+  font-size: 12px;
+  color: var(--ghost-mute);
+}
+/* Right footer block containing navigation links */
+
+.footer-right a {
+  color: var(--ghost-dim);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+/* Footer link styling */
+
+.footer-right a:hover { color: var(--ghost); }
+/* Brightens footer links on hover */
+
+/* ─── RESPONSIVE ───────────────────────────────────────────── */
+@media (max-width: 768px) {
+  nav { padding: 0 20px; }
+  nav .nav-links { display: none; }
+  .container { padding: 0 20px; }
+  .cta-strip { padding: 48px 20px; }
+  footer { padding: 32px 20px; flex-direction: column; }
+}
+/* Mobile adjustments — hides nav links and reduces padding on small screens */
+</style>
+
+</head>
+<body>
+
+<!-- ─── NAV ──────────────────────────────────────────────── -->
+<nav>
+  <!-- Logo links back to homepage -->
+  <a href="index.html" class="nav-logo">
+    <svg class="nav-shield" viewBox="0 0 100 110" fill="none">
+      <!-- Shield SVG icon — identical to index.html nav shield -->
+      <path d="M50 2 L98 20 L98 68 C98 88 50 108 50 108 C50 108 2 88 2 68 L2 20 Z"
+            fill="#0d1117" stroke="#1c2128" stroke-width="2"/>
+      <path d="M50 18 L84 36 L84 76 L16 76 L16 36 Z"
+            fill="none" stroke="#f1f5f9" stroke-width="1.5" stroke-linejoin="round" opacity="0.3"/>
+      <path d="M50 18 L84 36" stroke="#f1f5f9" stroke-width="1.5" stroke-linecap="round" opacity="0.5"/>
+      <path d="M50 18 L16 36" stroke="#f1f5f9" stroke-width="1.5" stroke-linecap="round" opacity="0.5"/>
+      <path d="M44 70 L44 34 L50 22 L56 34 L56 70 Z" fill="#f1f5f9"/>
+      <path d="M28 72 C28 66 38 68 50 68 C62 68 72 66 72 72 C72 78 62 76 50 76 C38 76 28 78 28 72Z" fill="#f1f5f9"/>
+      <rect x="46" y="76" width="8" height="7" rx="2" fill="#f1f5f9"/>
+      <ellipse cx="50" cy="85" rx="6" ry="4" fill="#f1f5f9"/>
+    </svg>
+    <span class="nav-name">SentinelHome101</span>
+  </a>
+  <!-- Nav links matching index.html order -->
+  <ul class="nav-links">
+    <li><a href="index.html#what">What It Does</a></li>
+    <li><a href="index.html#features">Features</a></li>
+    <li><a href="index.html#privacy">Privacy</a></li>
+    <li><a href="index.html#transparency">Transparency</a></li>
+    <li><a href="blog/">Blog</a></li>
+    <li><a href="faq.html">FAQ</a></li>
+    <li><a href="index.html#download" class="nav-cta">Download</a></li>
+  </ul>
+</nav>
+
+<!-- ─── PAGE HEADER ──────────────────────────────────────── -->
+<div class="page-header">
+  <div class="container">
+    <!-- Small label above the heading -->
+    <p class="section-label">FAQ</p>
+    <!-- Main page heading -->
+    <h1 class="section-title">Common questions.</h1>
+    <!-- Supporting subtitle -->
+    <p class="section-sub">Everything you need to know before downloading and running SentinelHome101 on your home network.</p>
+  </div>
+</div>
+
+<!-- ─── FAQ LIST ──────────────────────────────────────────── -->
+<section class="faq-section">
+  <div class="container">
+    <div class="faq-list">
+
+      <!-- Question 1: Installation barrier — lowest friction, answer first -->
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          <span>Do I need to install Python or any other software?</span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-a">No. SentinelHome101.exe is completely self-contained. It includes everything it needs to run. Just double-click it — no Python, no extra downloads, no setup wizard.</div>
+      </div>
+
+      <!-- Question 2: Defender flag — address trust objection early -->
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          <span>Why does Windows Defender flag it sometimes?</span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-a">SentinelHome101 is packaged using a tool called PyInstaller, which bundles Python applications into a single executable file. Some antivirus engines flag PyInstaller-packaged files as suspicious based on the packaging pattern alone, not because of anything the app actually does. Microsoft Defender, Kaspersky, and Bitdefender all return clean results. 67 of 71 engines on VirusTotal cleared it. The 4 flags are heuristic detections, not identifications of actual malicious code. You can review the full report on our <a href="index.html#transparency">transparency page</a>.</div>
+      </div>
+
+      <!-- Question 3: Data privacy — reinforce trust, storage location folded in -->
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          <span>Is my data being sent anywhere?</span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-a">No. All 101 checks run entirely on your local machine and network. No scan results, device information, IP addresses, or personal data are sent to any server. Two features optionally connect to external services — internet speed test and credential breach check — both are disabled by default and require explicit opt-in. All data is stored locally on your machine at C:\Users\[YourName]\AppData\Roaming\SentinelHome101\. It never leaves your machine.</div>
+      </div>
+
+      <!-- Question 4: Admin prompt — answers first thing they see when running -->
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          <span>Why does it ask for Administrator permission every time?</span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-a">Several of the 101 security checks require Windows Administrator access — for example, reading Windows Security Center status, querying system information, and running network configuration commands. The UAC prompt appears every time as a result. This is intentional for a security tool.</div>
+      </div>
+
+      <!-- Question 5: Score explanation — shifts user from skeptic to engaged -->
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          <span>What does the network score mean?</span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-a">SentinelHome101 starts every scan at 100 and deducts points for security findings. Each critical finding costs 15 points. Each warning costs 5 points. A score above 80 is good. A score between 50 and 79 is fair. A score below 50 means significant issues were found that need prompt attention.</div>
+      </div>
+
+      <!-- Question 6: Unknown device — meets users who have already run a scan -->
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          <span>The app found an unknown device on my network. What should I do?</span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-a">First try to identify it — check your router's connected devices list. Common unknown devices include smart TVs, streaming boxes, smart speakers, and printers. If you cannot identify a device after investigation, change your WiFi password. Any device connected without your knowledge will be disconnected when the password changes.</div>
+      </div>
+
+      <!-- Question 7: Auto-fix — sets expectations before frustration -->
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          <span>Does SentinelHome101 fix problems automatically?</span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-a">No. SentinelHome101 is an audit and reporting tool — it finds problems and tells you how to fix them in plain English. It does not make changes to your system or network automatically. You remain in control of every change that is made.</div>
+      </div>
+
+      <!-- Question 8: Perfect score — honest answer that builds credibility -->
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          <span>I got a perfect score. Does that mean I am completely secure?</span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-a">No tool can guarantee complete security, and SentinelHome101 is no exception. A perfect score means none of the 101 checks found a known issue at the time of the scan. It does not account for threats that emerge after the scan runs, vulnerabilities in software you have installed, or human factors like weak passwords or phishing. Think of it as a strong baseline, not a final verdict. Running scans regularly and acting on findings over time is what actually improves your security posture.</div>
+      </div>
+
+      <!-- Question 9: Router credentials — short answer + blog link -->
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          <span>What is a default router credential and why does it matter?</span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-a">Every router ships from the factory with a default username and password — usually something like admin/admin or admin/password. If you have never changed yours, anyone who can reach your router can log into it and take control of your network. SentinelHome101 checks this on every scan. <a href="blog/router-default-credentials.html">Read the full article on router default credentials.</a></div>
+      </div>
+
+      <!-- Question 10: DNS hijacking — short answer + blog link -->
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          <span>What does it mean if my DNS has been changed?</span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-a">DNS is the system that translates website names into IP addresses. If your DNS settings have been changed without your knowledge, someone may be redirecting your traffic — sending you to fake versions of real websites to steal your login credentials. This is called DNS hijacking and it is one of the harder attacks to detect without a dedicated tool. SentinelHome101 checks your DNS configuration on every scan. <a href="blog/what-is-dns-hijacking.html">Read the full article on DNS hijacking.</a></div>
+      </div>
+
+      <!-- Question 11: UPnP — short answer + blog link -->
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          <span>What is UPnP and should I disable it?</span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-a">UPnP stands for Universal Plug and Play. It is a feature that allows devices on your network to automatically open ports on your router without asking for permission. That convenience comes with real security risk — malicious software can use UPnP to punch holes in your firewall without you knowing. SentinelHome101 checks whether UPnP is enabled and flags it if so. <a href="blog/what-is-upnp-and-why-is-it-dangerous.html">Read the full article on UPnP risks.</a></div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ─── CTA STRIP ─────────────────────────────────────────── -->
+<div class="cta-strip">
+  <!-- Encourages download after user has had their questions answered -->
+  <h2>Ready to see what your network is hiding?</h2>
+  <p>Free for Windows. No installation required. Results in under a minute.</p>
+  <a href="https://github.com/SentinelHome101/SentinelHome101/releases/latest/download/SentinelHome101.exe" class="btn-primary">
+    <!-- Download icon SVG -->
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+      <path d="M8 1v9M4 7l4 4 4-4M2 13h12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+    Download Free — Windows
+  </a>
+</div>
+
+<!-- ─── FOOTER ────────────────────────────────────────────── -->
+<footer>
+  <!-- Left side: version number, support email, legal disclaimer -->
+  <div class="footer-left">
+    SentinelHome101 v1.0.1<br>
+    support@sentinelhome101.com<br>
+    <span style="font-size:10px;line-height:1.8;">Provided as-is without warranty. Diagnostic tool only — does not modify your system.</span>
+  </div>
+  <!-- Right side: navigation links -->
+  <div class="footer-right">
+    <a href="https://github.com/SentinelHome101/SentinelHome101">GitHub</a>
+    &nbsp;·&nbsp;
+    <a href="https://github.com/SentinelHome101/SentinelHome101/releases">Releases</a>
+    &nbsp;·&nbsp;
+    <a href="blog/">Blog</a>
+    &nbsp;·&nbsp;
+    <a href="faq.html">FAQ</a>
+    &nbsp;·&nbsp;
+    <a href="privacy.html">Privacy Policy</a>
+    &nbsp;·&nbsp;
+    <a href="mailto:support@sentinelhome101.com">Support</a>
+  </div>
+</footer>
+
+<script>
+// FAQ accordion toggle function
+function toggleFaq(btn) {
+  const answer = btn.nextElementSibling; // Gets the answer div directly after the clicked button
+  const isOpen = answer.classList.contains('open'); // Checks if the answer is currently visible
+  document.querySelectorAll('.faq-a').forEach(a => a.classList.remove('open')); // Closes all open answers
+  document.querySelectorAll('.faq-q').forEach(b => b.classList.remove('open')); // Resets all button states
+  if (!isOpen) { // If the clicked answer was closed, open it
+    answer.classList.add('open'); // Expands the answer
+    btn.classList.add('open'); // Rotates the plus icon to an X
+  }
+}
+</script>
+
+</body>
+</html>
