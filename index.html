@@ -1208,11 +1208,10 @@ footer {
         </a>
 
 <div class="download-warning">
-  <strong>Windows SmartScreen note:</strong> Windows may show an "Unknown Publisher"
-  warning on first run. Click <strong>More info</strong> then <strong>Run anyway</strong>.
-  This appears because the current release is not yet code-signed with a commercial
-  certificate. A signed release is planned. Source code is publicly available on GitHub
-  for independent review.
+  <strong>Windows SmartScreen note:</strong> SentinelHome101 v1.0.1 is signed with a
+  verified certificate issued to <strong>Michael Hannebaum</strong>. If SmartScreen
+  appears, click <strong>More info</strong> then <strong>Run anyway</strong>. SmartScreen
+  reputation builds over time as more users download the signed build.
 </div>
 
 <div style="font-size:12px;color:var(--ghost-mute);background:rgba(56,139,253,0.06);
@@ -1289,18 +1288,18 @@ footer {
       </div>
 
       <div style="background:var(--bg-3);border:1px solid var(--border);
-                  border-left:3px solid var(--warning);padding:20px 24px;border-radius:2px;">
+                  border-left:3px solid var(--safe);padding:20px 24px;border-radius:2px;">
         <div style="font-size:13px;font-weight:500;color:var(--ghost);margin-bottom:8px;">
-          Why it is currently unsigned
+          Code signing
         </div>
         <div style="font-size:13px;color:var(--ghost-dim);line-height:1.7;">
-          The current release does not yet have a commercial code signing
-          certificate. This causes the Windows SmartScreen "Unknown Publisher"
-          warning. A signed release with a verified publisher name is planned.
-          Until then, the GitHub source code is the most transparent proof of
-          legitimacy available.
+          SentinelHome101 v1.0.1 is signed with a verified Microsoft Artifact
+          Signing certificate issued to Michael Hannebaum. Windows will display
+          the verified publisher name in UAC prompts. SmartScreen reputation
+          builds over time as more users download and run the signed build.
         </div>
       </div>
+  
 
       <div style="background:var(--bg-3);border:1px solid var(--border);
                   border-left:3px solid var(--safe);padding:20px 24px;border-radius:2px;">
@@ -1321,13 +1320,12 @@ footer {
     Independent security scan
   </div>
   <div style="font-size:13px;color:var(--ghost-dim);line-height:1.7;">
-    SentinelHome101 v1.0.0 was scanned by 71 independent security engines
-    on VirusTotal. 67 of 71 returned clean. The 4 flags are heuristic
-    detections based on PyInstaller packaging patterns — not actual malicious
-    code. Major engines including Microsoft Defender, Kaspersky, and Bitdefender
-    all returned clean.
+    SentinelHome101 v1.0.1 was scanned by 71 independent security engines
+    on VirusTotal. 71 of 71 returned clean. The signed build eliminated all
+    previous heuristic flags. Major engines including Microsoft Defender,
+    Kaspersky, and Bitdefender all returned clean.
     <br><br>
-    <a href="https://www.virustotal.com/gui/file/1ae747e0b2cd53a8a3a57031c3195afdaf61d790ad6d3946cdc8c056e65ebbdf/detection"
+    <a href="https://www.virustotal.com/gui/file/b2d7336fc22f921e7554ae6bebed613e959fd0d45f210ef67f56462380f2a266"
        target="_blank"
        style="color:#388BFD;text-decoration:underline;">
       View full VirusTotal report →
@@ -1445,9 +1443,7 @@ footer {
     &nbsp;·&nbsp;
     <a href="blog/">Blog</a>
     &nbsp;·&nbsp;
-    <a href="#faq">FAQ</a>
-    &nbsp;·&nbsp;
-    <a href="#faq">FAQ</a>
+    <a href="faq.html">FAQ</a>
     &nbsp;·&nbsp;
     <a href="privacy.html">Privacy Policy</a>
     &nbsp;·&nbsp;
