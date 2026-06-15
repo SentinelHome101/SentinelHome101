@@ -8,11 +8,15 @@ No IT background required. No cloud. No subscription.
 
 ---
 
+![SentinelHome101 Dashboard](assets/screenshot.png)
+
+---
+
 ## Download
 
 **[→ Download SentinelHome101.exe](https://github.com/SentinelHome101/SentinelHome101/releases/latest/download/SentinelHome101.exe)**
 
-Version 1.0.0 · Windows 10 / 11 (64-bit) · No Python required
+Version 1.0.1 · Windows 10 / 11 (64-bit) · No Python required
 
 ---
 
@@ -49,7 +53,7 @@ No installer. No setup wizard. No registry modifications.
 
 ### Windows SmartScreen
 
-Windows may show an "Unknown Publisher" warning on first run. Click **More info** → **Run anyway**. This appears because the current release is not yet code-signed with a commercial certificate. A signed release is planned. Full source code is available in this repository for independent review.
+SentinelHome101 v1.0.1 is signed with a verified publisher certificate. If SmartScreen appears, click **More info** then **Run anyway**. SmartScreen reputation builds over time as more users download the signed build. Full source code is available in this repository for independent review.
 
 ---
 
@@ -57,10 +61,10 @@ Windows may show an "Unknown Publisher" warning on first run. Click **More info*
 
 SentinelHome101 is a network security audit tool. It reads Windows registry settings, runs network commands (netstat, arp, ipconfig), scans your local subnet, and probes open ports. Automated sandbox tools may flag this behavior — this is expected for any security scanner.
 
-**VirusTotal scan — v1.0.0: 67/71 engines clean**
-[→ View VirusTotal report](https://www.virustotal.com/gui/file/1ae747e0b2cd53a8a3a57031c3195afdaf61d790ad6d3946cdc8c056e65ebbdf/detection)
+**VirusTotal scan — v1.0.1: 71/71 engines clean**
+[→ View VirusTotal report](https://www.virustotal.com/gui/file/b2d7336fc22f921e7554ae6bebed613e959fd0d45f210ef67f56462380f2a266)
 
-Major engines including Microsoft Defender, Kaspersky, and Bitdefender all returned clean. The 4 flags are heuristic detections based on PyInstaller packaging patterns, not actual malicious behavior.
+Major engines including Microsoft Defender, Kaspersky, and Bitdefender all returned clean. The signed build eliminated all previous heuristic flags from the unsigned v1.0.0 build.
 
 All source code is in this repository. You can read it, compile it yourself, or have someone you trust review it independently.
 
