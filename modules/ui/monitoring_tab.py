@@ -377,7 +377,8 @@ class MonitoringTab:
 
                 ping = subprocess.run(
                     ['ping', '-n', '10', router],
-                    capture_output=True, text=True, timeout=30)
+                    capture_output=True, text=True, timeout=30,
+                    creationflags=0x08000000)  # CREATE_NO_WINDOW — prevents console flash
 
                 avg_match = re.search(r'Average = (\d+)ms', ping.stdout)
                 loss_match = re.search(r'(\d+)% loss', ping.stdout)
@@ -422,7 +423,8 @@ class MonitoringTab:
             try:
                 ns = subprocess.run(
                     ['netstat', '-n'],
-                    capture_output=True, text=True, timeout=10)
+                    capture_output=True, text=True, timeout=10,
+                    creationflags=0x08000000)  # CREATE_NO_WINDOW — prevents console flash
                 count = sum(1 for l in ns.stdout.split('\n')
                             if l.strip().startswith('TCP'))
                 results['connections'] = str(count)
